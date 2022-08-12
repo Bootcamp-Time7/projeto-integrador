@@ -174,22 +174,22 @@ public class BatchStockImpService implements IBatchStockService {
         response.setSectorList(sectorList);
     }
 
-    public List<DataBaseQuery> getListDueDate (long days, long idSector) {
-
-        List<DataBaseQuery> listDueDate = batchStockRepo.g;
-
-        LocalDate minusDays2 = batchStock.getDueDate().minusDays(days);
-        Period.between(LocalDate.now(), minusDays2).getDays();
-
-        minusDays2 = batchStock.getDueDate().minusDays(days);
-
-        if (LocalDate.now().isBefore(minusDays2)) {
-
-            batchListByCategory.add(batchResponseDto);
-
-
-        }
-    }
+//    public List<DataBaseQuery> getListDueDate (long days, long idSector) {
+//
+//        List<DataBaseQuery> listDueDate = batchStockRepo.g;
+//
+//        LocalDate minusDays2 = batchStock.getDueDate().minusDays(days);
+//        Period.between(LocalDate.now(), minusDays2).getDays();
+//
+//        minusDays2 = batchStock.getDueDate().minusDays(days);
+//
+//        if (LocalDate.now().isBefore(minusDays2)) {
+//
+//            batchListByCategory.add(batchResponseDto);
+//
+//
+//        }
+//    }
 }
 
 

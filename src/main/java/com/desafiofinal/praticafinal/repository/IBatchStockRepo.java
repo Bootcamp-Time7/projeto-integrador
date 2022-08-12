@@ -1,10 +1,9 @@
 package com.desafiofinal.praticafinal.repository;
 
-import com.desafiofinal.praticafinal.dto.queryDto.BatchStockSectorQuantityDTO;
 import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQuery;
+import com.desafiofinal.praticafinal.dto.queryDto.DataBaseStockQuery;
 import com.desafiofinal.praticafinal.dto.queryDto.DataBaseTotalQuantityQuery;
 import com.desafiofinal.praticafinal.model.BatchStock;
-import com.desafiofinal.praticafinal.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -50,10 +49,11 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
     List<DataBaseTotalQuantityQuery> getListQuantity(long id);
 
     @Query(value = "\n" +
-            "SELECT * FROM batch_stock \n" +
-            "join in_bound_order on batch_stock.id_inboundorder = in_bound_order.order_id\n" +
-            "join sector on in_bound_order.id_sector = sector.sector_id\n" +
-            "where sector_id = ?1\n" +
-            "order by batch_stock.due_date;", nativeQuery = true)
-    List<DataBaseQuery> getListDueDate();
+            "SELECT batch.batch_id, batch.id_product, p.product_type, batch.due_date, batch.current_quantity FROM batch_stock as batch\n" +
+            "join in_bound_order on batch.id_inboundorder = in_bound_order.order_id\n" +
+            "join product as p on p.id = batch.id_product\n" +
+            "join sector as s on in_bound_order.id_sector = s.sector_id\n" +
+            "where s.category =?1\n" +
+            "order by batch.due_date;", nativeQuery = true)
+    List<DataBaseStockQuery> getListDueDate(String category);
 }
