@@ -5,20 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseSectorQuery {
-
-    private SectorQuery sector;
+public class ResponseSectorTotalQuantity {
 
     private long productId;
 
-    private List<StockQuery> stockList;
+    private List<SectorQuantityQuery> sectorList;
 
 }
 

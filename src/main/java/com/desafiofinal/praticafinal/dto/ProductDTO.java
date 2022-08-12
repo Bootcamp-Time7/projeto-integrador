@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProductDTO {
 
-    private long id;
+    private Long id;
 
     private String productType;
 
@@ -28,10 +28,9 @@ public class ProductDTO {
 
     private String productName;
 
-
     private SellerDTO seller;
 
-    private double bulk;
+    private Double bulk;
 
     @JsonIgnore
 //    private List<BatchStock> batchList;
