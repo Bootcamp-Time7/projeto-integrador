@@ -174,22 +174,36 @@ public class BatchStockImpService implements IBatchStockService {
         response.setSectorList(sectorList);
     }
 
-//    public List<DataBaseQuery> getListDueDate (long days, long idSector) {
-//
-//        List<DataBaseQuery> listDueDate = batchStockRepo.g;
-//
-//        LocalDate minusDays2 = batchStock.getDueDate().minusDays(days);
-//        Period.between(LocalDate.now(), minusDays2).getDays();
-//
-//        minusDays2 = batchStock.getDueDate().minusDays(days);
-//
-//        if (LocalDate.now().isBefore(minusDays2)) {
-//
-//            batchListByCategory.add(batchResponseDto);
-//
-//
-//        }
-//    }
+    public ResponseStock getListDueDate (String category, Long days) {
+
+        List<DataBaseStockQuery> listDueDate = batchStockRepo.getListDueDate(category);
+        List<ResponseStockQuery> listResponse = new ArrayList<>();
+        if(listDueDate.isEmpty()){
+            throw new ElementNotFoundException("Lista vazia");
+        }
+
+        for (DataBaseStockQuery data : listDueDate) {
+            LocalDate minusDays2 = data.getDue_date().minusDays(days);
+
+                if (LocalDate.now().isBefore(minusDays2)) {
+                ResponseStockQuery stock = ResponseStockQuery.builder()
+                        .batchId(data.getBatch_id())
+                        .dueDate(data.getDue_date())
+                        .idProduct(data.getId_product())
+                        .productType(data.getProduct_type())
+                        .currentQuantity(data.getCurrent_quantity())
+                        .build();
+                listResponse.add(stock);
+            }
+        }
+        ResponseStock responseStock = new ResponseStock();
+        if (listResponse.isEmpty()){
+            throw new RuntimeException("Nenhum item dentro da validade nesse intervalo de dias");
+        }
+
+        responseStock.setDataBaseStocks(listResponse);
+        return responseStock;
+    }
 }
 
 
