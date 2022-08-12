@@ -53,7 +53,7 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
             "join in_bound_order on batch.id_inboundorder = in_bound_order.order_id\n" +
             "join product as p on p.id = batch.id_product\n" +
             "join sector as s on in_bound_order.id_sector = s.sector_id\n" +
-            "where s.category =?1\n" +
+            "where s.sector_id =?1\n" +
             "order by batch.due_date;", nativeQuery = true)
-    List<DataBaseStockQuery> getListDueDate(String category);
+    List<DataBaseStockQuery> getListDueDate(Long sectorId);
 }

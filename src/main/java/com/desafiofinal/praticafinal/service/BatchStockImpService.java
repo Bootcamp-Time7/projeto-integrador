@@ -174,9 +174,9 @@ public class BatchStockImpService implements IBatchStockService {
         response.setSectorList(sectorList);
     }
 
-    public ResponseStock getListDueDate (String category, Long days) {
+    public ResponseStock getListDueDate (Long sectorId, Long days) {
 
-        List<DataBaseStockQuery> listDueDate = batchStockRepo.getListDueDate(category);
+        List<DataBaseStockQuery> listDueDate = batchStockRepo.getListDueDate(sectorId);
         List<ResponseStockQuery> listResponse = new ArrayList<>();
         if(listDueDate.isEmpty()){
             throw new ElementNotFoundException("Lista vazia");
