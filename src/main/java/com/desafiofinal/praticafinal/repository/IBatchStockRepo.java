@@ -41,13 +41,13 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
             "order by batch_stock.due_date;", nativeQuery = true)
     List<DataBaseQuery> getListOrderedByDueDate(long id);
 
-//    @Query(value = "\n" +
-//            "SELECT sum(batch.current_quantity) as total_quantity, s.sector_id, batch.id_product, s.category FROM batch_stock as batch\n" +
-//            "join in_bound_order on batch.id_inboundorder = in_bound_order.order_id\n" +
-//            "join sector as s on in_bound_order.id_sector = s.sector_id\n" +
-//            "where id_product = ?1\n" +
-//            "group by s.sector_id;", nativeQuery = true)
-//    List<DataBaseTotalQuantityQuery> getListQuantity(long id);
+    @Query(value = "\n" +
+            "SELECT sum(batch.current_quantity) as total_quantity, s.sector_id, batch.id_product, s.category FROM batch_stock as batch\n" +
+            "join in_bound_order on batch.id_inboundorder = in_bound_order.order_id\n" +
+            "join sector as s on in_bound_order.id_sector = s.sector_id\n" +
+            "where id_product = ?1\n" +
+            "group by s.sector_id;", nativeQuery = true)
+    List<DataBaseTotalQuantityQuery> getListQuantity(long id);
 
 
 //    //Requisito 5

@@ -148,31 +148,31 @@ public class BatchStockImpService implements IBatchStockService {
         }
     }
 
-//    public ResponseSectorTotalQuantity getTotalQuantity(long id) {
-//
-//        List<DataBaseTotalQuantityQuery> dataBaseTotalQuantityQueryList = batchStockRepo.getListQuantity(id);
-//        if(dataBaseTotalQuantityQueryList.isEmpty()){
-//            throw new ElementNotFoundException("Não há esse produto em nenhum depósito");
-//        }
-//        ResponseSectorTotalQuantity response = new ResponseSectorTotalQuantity();
-//        response.setProductId(id);
-//        buildResponse(dataBaseTotalQuantityQueryList, response);
-//
-//        return response;
-//    }
-//
-//    private void buildResponse(List<DataBaseTotalQuantityQuery> dataBaseTotalQuantityQueryList, ResponseSectorTotalQuantity response) {
-//        List<SectorQuantityQuery> sectorList = new ArrayList<>();
-//
-//        for(DataBaseTotalQuantityQuery data: dataBaseTotalQuantityQueryList){
-//            SectorQuantityQuery sectorQuantity = SectorQuantityQuery.builder()
-//                                .sectorId(data.getSector_id())
-//                                .totalQuantity(data.getTotal_quantity())
-//                                .build();
-//            sectorList.add(sectorQuantity);
-//        }
-//        response.setSectorList(sectorList);
-//    }
+    public ResponseSectorTotalQuantity getTotalQuantity(long id) {
+
+        List<DataBaseTotalQuantityQuery> dataBaseTotalQuantityQueryList = batchStockRepo.getListQuantity(id);
+        if(dataBaseTotalQuantityQueryList.isEmpty()){
+            throw new ElementNotFoundException("Não há esse produto em nenhum depósito");
+        }
+        ResponseSectorTotalQuantity response = new ResponseSectorTotalQuantity();
+        response.setProductId(id);
+        buildResponse(dataBaseTotalQuantityQueryList, response);
+
+        return response;
+    }
+
+    private void buildResponse(List<DataBaseTotalQuantityQuery> dataBaseTotalQuantityQueryList, ResponseSectorTotalQuantity response) {
+        List<SectorQuantityQuery> sectorList = new ArrayList<>();
+
+        for(DataBaseTotalQuantityQuery data: dataBaseTotalQuantityQueryList){
+            SectorQuantityQuery sectorQuantity = SectorQuantityQuery.builder()
+                                .sectorId(data.getSector_id())
+                                .totalQuantity(data.getTotal_quantity())
+                                .build();
+            sectorList.add(sectorQuantity);
+        }
+        response.setSectorList(sectorList);
+    }
 }
 
 //Requisito 5

@@ -38,10 +38,10 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
-//    @GetMapping("sector/{productId}")
-//    ResponseEntity<ResponseSectorTotalQuantity> getTotalQuantitySector(@PathVariable long productId)  {
-//        ResponseSectorTotalQuantity getResponse = service.getTotalQuantity(productId);
-//        return new ResponseEntity<>(getResponse, HttpStatus.OK);
-//    }
+    @GetMapping("sector/{productId}")
+    ResponseEntity<ResponseSectorTotalQuantity> getTotalQuantitySector(@PathVariable long productId)  {
+        ResponseSectorTotalQuantity getResponse = service.getTotalQuantity(productId);
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
 
 }
