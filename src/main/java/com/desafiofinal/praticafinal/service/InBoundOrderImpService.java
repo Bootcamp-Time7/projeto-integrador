@@ -42,8 +42,7 @@ public class InBoundOrderImpService implements IinboundOrderService {
         var inBoundOrder = buildInboundOrder(inboundOrderRequestDTO, true);
         var batchStock = buildBatchStockList(inboundOrderRequestDTO, inBoundOrder);
         inBoundOrder.setBatchStockList(batchStock);
-        InBoundOrder savedInBoundOrder = inBoundOrderRepo.save(inBoundOrder);
-        return savedInBoundOrder;
+        return inBoundOrderRepo.save(inBoundOrder);
     }
 
 
@@ -53,9 +52,7 @@ public class InBoundOrderImpService implements IinboundOrderService {
         List<BatchStock> batchList = buildBatchStockList(inBoundOrderRequestDTO, inBoundOrder);
         verifyBatchStock(batchList, inBoundOrder);
         inBoundOrder.setBatchStockList(batchList);
-        batchStockRepo.saveAll(inBoundOrder.getBatchStockList());
-        InBoundOrder updatedInBoundOrder = inBoundOrderRepo.save(inBoundOrder);
-        return updatedInBoundOrder;
+        return inBoundOrderRepo.save(inBoundOrder);
 
     }
 
