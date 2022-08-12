@@ -46,4 +46,10 @@ public class BatchStockController {
        ResponseStock getResponse = service.getListDueDate(sectorId, days);
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
+
+    @GetMapping("stockByCategoryDays/{category}/{days}")
+    ResponseEntity<ResponseStock> getCategoryDueDate(@PathVariable String category, @PathVariable Long days)  {
+        ResponseStock getResponse = service.getListCategoryDueDate(category,days);
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
 }
