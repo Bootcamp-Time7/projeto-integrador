@@ -1,6 +1,5 @@
 package com.desafiofinal.praticafinal.dto.requestResponseDto;
 
-import com.desafiofinal.praticafinal.dto.ProductDTO;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,44 +12,44 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BatchStockResponseDto {
+public class BatchStockResponseDTO {
 
-    private long batchId;
+    private Long batchId;
 
-    private long currentQuantity;
+    private Long currentQuantity;
 
     private LocalDate dueDate;
 
-    private ProductDTO productDto;
+    private ProductResponseDTO productId;
 
-    public BatchStockResponseDto(BatchStock batchStock) {
+    public BatchStockResponseDTO(BatchStock batchStock) {
         this.batchId = batchStock.getBatchId();
         this.currentQuantity = batchStock.getCurrentQuantity();
         this.dueDate = batchStock.getDueDate();
-        this.productDto = new ProductDTO(batchStock.getProduct());
+        this.productId = new ProductResponseDTO(batchStock.getProduct());
     }
 
-    public static BatchStock convertBatchStockDtoToBatchStock (BatchStockResponseDto batchStockDto){
+    public static BatchStock convertBatchStockDtoToBatchStock (BatchStockResponseDTO batchStockDto){
         return BatchStock.builder()
                 .batchId(batchStockDto.getBatchId())
                 .currentQuantity(batchStockDto.getCurrentQuantity())
                 .dueDate(batchStockDto.getDueDate())
-                .product(ProductDTO.convertDtoToProductIdOnly(batchStockDto.getProductDto()))
+                .product(ProductResponseDTO.convertToProductResponseDTO(batchStockDto.getProductId()))
                 .build();
     }
 
-    public static List<BatchStock> convertToListEntity (List<BatchStockResponseDto> batchStockDtoList){
+    public static List<BatchStock> convertToListEntity (List<BatchStockResponseDTO> batchStockDtoList){
         List<BatchStock> batchStockList = new ArrayList<>();
-        for(BatchStockResponseDto batchStockDto: batchStockDtoList){
+        for(BatchStockResponseDTO batchStockDto: batchStockDtoList){
             batchStockList.add(convertBatchStockDtoToBatchStock(batchStockDto));
         }
         return batchStockList;
     }
 
-    public static List<BatchStockResponseDto> convertToListDto (List<BatchStock> batchStockList){
-        List<BatchStockResponseDto> batchStockListDto = new ArrayList<>();
+    public static List<BatchStockResponseDTO> convertToListDto (List<BatchStock> batchStockList){
+        List<BatchStockResponseDTO> batchStockListDto = new ArrayList<>();
         for(BatchStock batchStock: batchStockList){
-            batchStockListDto.add(new BatchStockResponseDto(batchStock));
+            batchStockListDto.add(new BatchStockResponseDTO(batchStock));
         }
         return batchStockListDto;
     }

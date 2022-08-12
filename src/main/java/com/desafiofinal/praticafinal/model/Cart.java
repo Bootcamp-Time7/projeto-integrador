@@ -30,5 +30,5 @@ public class Cart {
     private String orderStatus;
 
     @OneToMany (mappedBy = "idCart")
-    private List<CartBatchStock> listCartBatchStock;
+    private List<Purchase> listPurchase;
 }

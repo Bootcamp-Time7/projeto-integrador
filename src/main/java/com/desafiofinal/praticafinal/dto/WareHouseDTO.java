@@ -1,3 +1,5 @@
+package com.desafiofinal.praticafinal.dto;
+
 import com.desafiofinal.praticafinal.model.Sector;
 import com.desafiofinal.praticafinal.model.WareHouse;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,12 @@ public class WareHouseDTO {
     public WareHouseDTO(WareHouse wareHouse) {
         this.wareHouseId = wareHouse.getWareHouseId();
         this.sectorList = wareHouse.getSectorList();
+    }
+
+    public static WareHouse convertToWareHouse(WareHouseDTO wareHouseDTO){
+        return WareHouse.builder()
+                .wareHouseId(wareHouseDTO.getWareHouseId())
+                .build();
     }
 
 }

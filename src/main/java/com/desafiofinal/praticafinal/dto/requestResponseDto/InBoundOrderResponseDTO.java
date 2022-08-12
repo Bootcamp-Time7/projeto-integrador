@@ -1,12 +1,12 @@
-package com.desafiofinal.praticafinal.dto;
+package com.desafiofinal.praticafinal.dto.requestResponseDto;
 
+import com.desafiofinal.praticafinal.dto.BatchStockDTO;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Data
@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class InBoundOrderResponseDTO {
 
-    private List<BatchStockDTO> batchStockList;
+    private List<BatchStockDTO> batchStock;
 
     public InBoundOrderResponseDTO(InBoundOrder inBoundOrder) {
-         this.batchStockList = BatchStockDTO.convertToListDto(inBoundOrder.getBatchStockList());
+         this.batchStock = BatchStockDTO.convertToListDto(inBoundOrder.getBatchStockList());
     }
 
 }

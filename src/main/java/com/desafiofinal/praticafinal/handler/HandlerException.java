@@ -1,7 +1,7 @@
 package com.desafiofinal.praticafinal.handler;
 
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
-import com.desafiofinal.praticafinal.exception.ElementeAlreadyExistsException;
+import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
 import com.desafiofinal.praticafinal.exception.ExceededCapacityException;
 import com.desafiofinal.praticafinal.exception.ExceptionDetails;
 import org.springframework.http.HttpStatus;
@@ -23,8 +23,8 @@ public class HandlerException extends Throwable{
         );
     }
 
-    @ExceptionHandler(ElementeAlreadyExistsException.class)
-    public ResponseEntity<ExceptionDetails> exceptionHandler(ElementeAlreadyExistsException ex){
+    @ExceptionHandler(ElementAlreadyExistsException.class)
+    public ResponseEntity<ExceptionDetails> exceptionHandler(ElementAlreadyExistsException ex){
         return new ResponseEntity<>(
                 ExceptionDetails.builder()
                         .title(HttpStatus.CONFLICT.name())

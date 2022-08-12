@@ -1,12 +1,13 @@
 package com.desafiofinal.praticafinal.dto;
 
+import com.desafiofinal.praticafinal.dto.requestResponseDto.ProductResponseDTO;
 import com.desafiofinal.praticafinal.model.BatchStock;
-import com.desafiofinal.praticafinal.model.InBoundOrder;
-import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,33 +17,42 @@ import java.util.List;
 @AllArgsConstructor
 public class BatchStockDTO {
 
-
     private long batchNumber;
 
-    @Nullable
-    private ProductDTO product;
+    @NotNull(message = "Please enter a valid product")
+    private ProductResponseDTO product;
 
-    private float currentTemperature;
+    @NotNull(message = "Current temperature cannot be null")
+    private Float currentTemperature;
 
-    private float minimumTemperature;
+    @NotNull(message = "Initial temperature cannot be null")
+    private Float minimumTemperature;
 
-    private long initialQuantity;
+    @NotNull(message = "Initial quantity cannot be null")
+    @DecimalMin(value = "1", message = "Initial quantity cannot be less than 1")
+    private Long initialQuantity;
 
-    private long currentQuantity;
+    @NotNull(message = "Current quantity cannot be null")
+    private Long currentQuantity;
 
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "Manufacturing Date cannot be null. Format: yyyy/MM/dd")
     private LocalDate manufacturingDate;
 
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "Manufacturing Date cannot be null. Format: yyyy/MM/dd")
     private LocalDate manufacturingTime;
 
+    @Future(message = "Due date must be in the future")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "Due date cannot be null")
     private LocalDate dueDate;
 
     private Long inBoundOrderId;
 
-
-
     public BatchStockDTO(BatchStock batchStock) {
         this.batchNumber = batchStock.getBatchId();
-        this.product = new ProductDTO(batchStock.getProduct());
+        this.product = new ProductResponseDTO(batchStock.getProduct());
         this.currentTemperature = batchStock.getCurrentTemperature();
         this.minimumTemperature = batchStock.getMinimumTemperature();
         this.initialQuantity = batchStock.getInitialQuantity();
@@ -56,7 +66,7 @@ public class BatchStockDTO {
     public static BatchStock convertBatchStockDtoToBatchStock (BatchStockDTO batchStockDto){
         return BatchStock.builder()
                 .batchId(batchStockDto.getBatchNumber())
-                .product(ProductDTO.convertDtoToProductIdOnly(batchStockDto.getProduct()))
+                .product(ProductResponseDTO.convertToProductResponseDTO(batchStockDto.getProduct()))
                 .currentTemperature(batchStockDto.getCurrentTemperature())
                 .minimumTemperature(batchStockDto.getMinimumTemperature())
                 .initialQuantity(batchStockDto.getInitialQuantity())

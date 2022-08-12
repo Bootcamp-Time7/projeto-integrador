@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class InBoundOrderImpService implements IinboundOrderService {
+public class InBoundOrderImpService implements IinBoundOrderService {
 
     @Autowired
     private InBoundOrderRepo inBoundOrderRepo;
@@ -30,7 +30,7 @@ public class InBoundOrderImpService implements IinboundOrderService {
     @Transactional
     @Override
     public InBoundOrder saveInBoundOrder (InBoundOrder newOrder) {
-        InBoundOrder newInBoundOrder = foundInBoundOrder(newOrder);
+        InBoundOrder newInBoundOrder = verifyInBoundOrder(newOrder);
         List<BatchStock> batchStockList = verifyBatch(newInBoundOrder);
         verifySector(newInBoundOrder);
         newInBoundOrder.setBatchStockList(batchStockList);
@@ -40,13 +40,13 @@ public class InBoundOrderImpService implements IinboundOrderService {
 
     @Override
     public InBoundOrder updateInBoundOrder (InBoundOrder inBoundOrder)  {
-        InBoundOrder updatedOrder = foundInBoundOrder(inBoundOrder);
+        InBoundOrder updatedOrder = verifyInBoundOrder(inBoundOrder);
         verifyBatchStockPertenceToInBoundOrder(inBoundOrder.getBatchStockList(), inBoundOrder);
         batchStockRepo.saveAll(inBoundOrder.getBatchStockList());
         return inBoundOrderRepo.save(updatedOrder);
     }
 
-    private InBoundOrder foundInBoundOrder(InBoundOrder inboundOrder) {
+    private InBoundOrder verifyInBoundOrder(InBoundOrder inboundOrder) {
         Optional<InBoundOrder> foundInboundOrder = inBoundOrderRepo.findById(inboundOrder.getOrderId());
         if(foundInboundOrder.isPresent()){
             inboundOrder.setOrderId(foundInboundOrder.get().getOrderId());

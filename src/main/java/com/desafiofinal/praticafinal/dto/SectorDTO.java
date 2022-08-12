@@ -17,15 +17,15 @@ public class SectorDTO {
     private long sectorId;
     private String category;
     private double capacity;
-    private List<InBoundOrder> orderList;//TODO retirar DTO
-    private WareHouse wareHouse;
+    private List<InBoundOrderDTO> orderList;
+    private WareHouseDTO wareHouse;
 
     public SectorDTO(Sector sector) {
         this.sectorId = sector.getSectorId();
         this.category = sector.getCategory();
         this.capacity = sector.getCapacity();
-        this.orderList = sector.getOrderList();
-        this.wareHouse = sector.getWareHouse();
+        this.orderList = InBoundOrderDTO.convertListToDTO(sector.getOrderList());
+        this.wareHouse = new WareHouseDTO(sector.getWareHouse());
     }
 
     public static Sector convertToSector(SectorDTO sectorDTO){

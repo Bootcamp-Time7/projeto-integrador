@@ -1,14 +1,15 @@
 package com.desafiofinal.praticafinal.controller;
 
-import com.desafiofinal.praticafinal.dto.InBoundOrderDTO;
-import com.desafiofinal.praticafinal.dto.InBoundOrderResponseDTO;
-import com.desafiofinal.praticafinal.dto.InboundOrderRequestDTO;
+import com.desafiofinal.praticafinal.dto.requestResponseDto.InBoundOrderResponseDTO;
+import com.desafiofinal.praticafinal.dto.requestResponseDto.InBoundOrderRequestDTO;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
-import com.desafiofinal.praticafinal.service.IinboundOrderService;
+import com.desafiofinal.praticafinal.service.IinBoundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+
+import javax.validation.Valid;
 
 /**
  * This class holds all endpoints related to inbound orders
@@ -22,7 +23,7 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/api/v1/fresh-products/inboundorder")
 public class InBoundOrderController {
     @Autowired
-    private IinboundOrderService service;
+    private IinBoundOrderService service;
 
     /**
      * Route used to insert into the datavase a new inbound order
@@ -32,8 +33,8 @@ public class InBoundOrderController {
      */
 
     @PostMapping("/insert")
-    public ResponseEntity<InBoundOrderResponseDTO> create(@RequestBody InboundOrderRequestDTO newOrder) {
-        InBoundOrder newInBoundOrder = InboundOrderRequestDTO.convertDTOToInboundOrder(newOrder);
+    public ResponseEntity<InBoundOrderResponseDTO> create(@RequestBody @Valid InBoundOrderRequestDTO newOrder) {
+        InBoundOrder newInBoundOrder = InBoundOrderRequestDTO.convertDTOToInboundOrder(newOrder);
         InBoundOrder savedResponse = service.saveInBoundOrder(newInBoundOrder);
         return ResponseEntity.status(HttpStatus.CREATED).body(new InBoundOrderResponseDTO(savedResponse));
 
@@ -46,8 +47,8 @@ public class InBoundOrderController {
      * @throws Exception ElementNotFoundException
      */
     @PutMapping("/update")
-    public ResponseEntity<InBoundOrderResponseDTO> updateInBoundOrder(@RequestBody InboundOrderRequestDTO updateOrder) {
-        InBoundOrder updatedInBoundOrder = InboundOrderRequestDTO.convertDTOToInboundOrder(updateOrder);
+    public ResponseEntity<InBoundOrderResponseDTO> updateInBoundOrder(@RequestBody @Valid InBoundOrderRequestDTO updateOrder) {
+        InBoundOrder updatedInBoundOrder = InBoundOrderRequestDTO.convertDTOToInboundOrder(updateOrder);
         InBoundOrder updatedResponse = service.updateInBoundOrder(updatedInBoundOrder);
         return new ResponseEntity<>(new InBoundOrderResponseDTO(updatedResponse), HttpStatus.CREATED);
 

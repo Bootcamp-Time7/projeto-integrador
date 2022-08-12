@@ -1,6 +1,6 @@
 package com.desafiofinal.praticafinal.controller;
 
-import com.desafiofinal.praticafinal.dto.requestResponseDto.BatchStockResponseDto;
+import com.desafiofinal.praticafinal.dto.requestResponseDto.BatchStockResponseDTO;
 import com.desafiofinal.praticafinal.dto.ProductDTO;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.Product;
@@ -60,8 +60,8 @@ public class ProductController {
      * @throws Exception 
      */
     @GetMapping("/{category}")
-    ResponseEntity<List<BatchStockResponseDto>> getProductBySector(@PathVariable String category)throws Exception{
+    ResponseEntity<List<BatchStockResponseDTO>> getProductBySector(@PathVariable String category)throws Exception{
         List<BatchStock> response = batchStockService.listBatchStockByCategory(category);
-        return new ResponseEntity<List<BatchStockResponseDto>>(BatchStockResponseDto.convertToListDto(response),HttpStatus.FOUND);
+        return new ResponseEntity<List<BatchStockResponseDTO>>(BatchStockResponseDTO.convertToListDto(response),HttpStatus.FOUND);
     }
 }
