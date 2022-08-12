@@ -18,7 +18,7 @@ public class CartBuilder {
       builder.cart.setBuyer(BuyerBuilder.aBuyerWithoutCart().create());
       builder.cart.setCartId(1l);
       builder.cart.setDate(LocalDate.now());
-      builder.cart.setListCartBatchStock(CartBatchStockBuilder.aListOfCartBatchStocks());
+      builder.cart.setListPurchase(PurchaseBatchStockBuilder.aListOfPurchaseBatchStocks());
       builder.cart.setOrderStatus("Concluído");
       builder.cart.setTotalPrice(50.00);
 
