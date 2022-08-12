@@ -14,7 +14,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProductDTO {
 
-//    private Optional<Long> id;
     private String productName;
     private String productType;
     private Date validateDate;
@@ -22,12 +21,5 @@ public class ProductDTO {
     private Long idSeller;
     private double bulk;
 
-//    public ProductDTO(Product product, Seller seller) {
-//        this.productName = product.getProductName();
-//        this.productType = product.getProductType();
-//        this.price = product.getPrice();
-//        this.bulk = product.getBulk();
-//        this.idSeller = seller.getId();
-//        this.validateDate = product.getValidateDate();
-//    }
+
 }

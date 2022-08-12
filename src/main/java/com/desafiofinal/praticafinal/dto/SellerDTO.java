@@ -13,18 +13,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SellerDTO {
 
-//    private Optional<Long> id;
-
-    //    private long idSeller;
     private String sellerName;
 
-
-
-//    public SellerDTO(Seller seller) {
-////        this.idSeller = seller.getId();
-//        this.sellerName = seller.getSellerName();
-//    }
-//    public Seller toEntity() {
-//        return new Seller(this.sellerName);
-//    }
 }

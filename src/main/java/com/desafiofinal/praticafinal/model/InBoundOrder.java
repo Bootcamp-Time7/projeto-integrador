@@ -32,8 +32,6 @@ public class InBoundOrder {
     public InBoundOrder(InboundOrderRequestDTO dto) {
         this.orderId = dto.getOrderId();
         this.dateTime = dto.getDateTime();
-//        this.batchStockList = dto.getBatchStockList();
-//        this.sector = sector;
 
     }
 

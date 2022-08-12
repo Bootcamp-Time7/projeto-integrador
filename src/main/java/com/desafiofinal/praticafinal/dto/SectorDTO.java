@@ -25,15 +25,6 @@ public class SectorDTO {
         this.idWareHouse = sector.getWareHouse().getWareHouseId();
     }
 
-//    public SectorDTO(long l, String frio, int i, int i1, long l1) {
-//    }
-
-//    public  SectorDTO(long sectorId, String category, double capacity, Long idWareHouse) {
-//        this.sectorId = sectorId;
-//        this.category = category;
-//        this.capacity = capacity;
-//        this.idWareHouse = idWareHouse;
-//    }
 
 
 }

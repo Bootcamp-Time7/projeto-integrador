@@ -3,7 +3,9 @@ package com.desafiofinal.praticafinal.dto;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import lombok.*;
 import org.springframework.lang.Nullable;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -16,20 +18,33 @@ public class BatchStockDTO {
     private long batchNumber;
 
     @Nullable
-    private long product;
+    @NotNull(message = "Please enter a valid product")
+    private Long product;
 
-    private float currentTemperature;
+    @NotNull(message = "Current temperature cannot be null")
+    private Float currentTemperature;
 
-    private float minimumTemperature;
+    @NotNull(message = "Initial temperature cannot be null")
+    private Float minimumTemperature;
 
-    private long initialQuantity;
+    @NotNull(message = "Initial quantity cannot be null")
+    @DecimalMin(value = "1", message = "Initial quantity cannot be less than 1")
+    private Long initialQuantity;
 
-    private long currentQuantity;
+    @NotNull(message = "Current quantity cannot be null")
+    private Long currentQuantity;
 
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "Manufacturing Date cannot be null. Format: yyyy/MM/dd")
     private Date manufacturingDate;
 
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "Manufacturing Date cannot be null. Format: yyyy/MM/dd")
     private Date manufacturingTime;
 
+    @Future(message = "Due date must be in the future")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "Due date cannot be null")
     private Date dueDate;
 
 

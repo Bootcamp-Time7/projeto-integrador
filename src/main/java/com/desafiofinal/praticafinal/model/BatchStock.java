@@ -1,5 +1,7 @@
 package com.desafiofinal.praticafinal.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.*;
 import com.desafiofinal.praticafinal.dto.BatchStockDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

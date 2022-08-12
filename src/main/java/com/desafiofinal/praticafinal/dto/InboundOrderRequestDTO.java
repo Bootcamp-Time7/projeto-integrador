@@ -4,7 +4,10 @@ import com.desafiofinal.praticafinal.model.InBoundOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +17,12 @@ import java.util.List;
 public class InboundOrderRequestDTO {
 
     private long orderId;
+
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull(message = "Manufacturing Date cannot be null. Format: yyyy/MM/dd")
     private Date dateTime;
+
+    @NotNull(message = "Please enter a valid sector")
     private SectorDTO sector;
 
     private List<BatchStockDTO> batchStockList;
@@ -26,14 +34,9 @@ public class InboundOrderRequestDTO {
     }
 
     public long getSectorID(){
-        return sector.getSectorId();//todo incluir validação
+        return sector.getSectorId();
     }
 
-//    public static InBoundOrder convertDTOToInboundOrder(InboundOrderRequestDTO inboundOrderRequestDTO) {
-//        return InBoundOrder.builder()
-//                .orderId(inboundOrderRequestDTO.getOrderId())
-//                .dateTime(inboundOrderRequestDTO.getDateTime())
-//                .build();
-//    }
+
 
 }
