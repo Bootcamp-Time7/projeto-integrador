@@ -1,9 +1,6 @@
 package com.desafiofinal.praticafinal.controller;
 
-import com.desafiofinal.praticafinal.dto.queryDto.BatchStockSectorQuantityDTO;
-import com.desafiofinal.praticafinal.dto.queryDto.DataBaseTotalQuantityQuery;
-import com.desafiofinal.praticafinal.dto.queryDto.ResponseSectorQuery;
-import com.desafiofinal.praticafinal.dto.queryDto.ResponseSectorTotalQuantity;
+import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.service.BatchStockImpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +41,15 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
+    @GetMapping("stockByDays/{sectorId}/{days}")
+    ResponseEntity<ResponseStock> getStockByDueDate(@PathVariable Long sectorId, @PathVariable Long days)  {
+       ResponseStock getResponse = service.getListDueDate(sectorId, days);
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("stockByCategoryDays/{category}/{days}")
+    ResponseEntity<ResponseStock> getCategoryDueDate(@PathVariable String category, @PathVariable Long days)  {
+        ResponseStock getResponse = service.getListCategoryDueDate(category,days);
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
 }
