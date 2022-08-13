@@ -1,6 +1,8 @@
 package com.desafiofinal.praticafinal.Builder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.desafiofinal.praticafinal.model.BatchStock;
 
@@ -27,6 +29,14 @@ public class BatchStockBuilder {
         builder.batchStock.setProduct(null);
 
         return builder;
+    }
+
+    public static List<BatchStock> aListOfBatchStocks() {
+        ArrayList<BatchStock> batchStockList = new ArrayList<>();
+
+        batchStockList.add(aBatchStock().create());
+
+        return batchStockList;
     }
 
     public BatchStock create() {
