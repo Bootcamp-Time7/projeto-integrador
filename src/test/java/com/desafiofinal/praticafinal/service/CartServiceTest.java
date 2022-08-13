@@ -70,4 +70,10 @@ public class CartServiceTest {
         
     }
 
+    @Test
+    @DisplayName("Test if getProducts retuns a list a of products correctly")
+    void getProductsTest() {
+      
+    }
+
 }
