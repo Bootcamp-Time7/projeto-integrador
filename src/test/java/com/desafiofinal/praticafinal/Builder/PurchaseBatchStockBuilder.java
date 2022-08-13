@@ -16,7 +16,7 @@ public class PurchaseBatchStockBuilder {
     public static PurchaseBatchStockBuilder aPurchaseBatchStockBuilder() {
 
         PurchaseBatchStockBuilder builder = new PurchaseBatchStockBuilder(); 
-
+  
         builder.purchase = new Purchase(); 
         builder.purchase.setBatchStock(BatchStockBuilder.aBatchStock().create());
         builder.purchase.setPricePerProduct(5.50);

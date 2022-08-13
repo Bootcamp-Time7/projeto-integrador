@@ -164,5 +164,3 @@ public class CartImpService implements ICartService {
         }
     }
 }
-
-//3, 4 e 5: escrever query nativa no repository e já trazer o objeto pronto
