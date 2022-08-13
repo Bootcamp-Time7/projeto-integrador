@@ -25,8 +25,8 @@ public class BatchStockBuilder {
         builder.batchStock.setManufacturingDate(LocalDate.now());
         builder.batchStock.setManufacturingTime(LocalDate.now());
         builder.batchStock.setDueDate(LocalDate.now());
-        builder.batchStock.setInBoundOrder(null);
-        builder.batchStock.setProduct(null);
+        builder.batchStock.setInBoundOrder(InboundOrderBuilder.aInboundOrder().create());
+        builder.batchStock.setProduct(ProductBuilder.aProduct().create());
 
         return builder;
     }

@@ -10,7 +10,7 @@ public class CartBuilder {
 
     private CartBuilder() {}
 
-    public static CartBuilder aCartWhithoutBuyer() {
+    public static CartBuilder aCart() {
 
       CartBuilder builder = new CartBuilder();
       
@@ -19,7 +19,7 @@ public class CartBuilder {
       builder.cart.setCartId(1l);
       builder.cart.setDate(LocalDate.now());
       builder.cart.setListPurchase(PurchaseBatchStockBuilder.aListOfPurchaseBatchStocks());
-      builder.cart.setOrderStatus("Concluído");
+      builder.cart.setOrderStatus("Open");
       builder.cart.setTotalPrice(50.00);
 
       return builder;
