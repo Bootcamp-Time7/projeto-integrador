@@ -1,5 +1,6 @@
 package com.desafiofinal.praticafinal.service;
 
+import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
 import com.desafiofinal.praticafinal.model.*;
 import com.desafiofinal.praticafinal.repository.*;
@@ -31,6 +32,9 @@ public class InBoundOrderImpService implements IinBoundOrderService {
     @Override
     public InBoundOrder saveInBoundOrder (InBoundOrder newOrder) {
         InBoundOrder newInBoundOrder = verifyInBoundOrder(newOrder);
+        if(newInBoundOrder.getOrderId() != 0) {
+            throw new ElementAlreadyExistsException("Order already exists");
+        }
         List<BatchStock> batchStockList = verifyBatch(newInBoundOrder);
         verifySector(newInBoundOrder);
         newInBoundOrder.setBatchStockList(batchStockList);
@@ -41,8 +45,10 @@ public class InBoundOrderImpService implements IinBoundOrderService {
     @Override
     public InBoundOrder updateInBoundOrder (InBoundOrder inBoundOrder)  {
         InBoundOrder updatedOrder = verifyInBoundOrder(inBoundOrder);
+        if(updatedOrder.getOrderId() == 0) {
+            throw new ElementNotFoundException("Inbound does not exists");
+        }
         verifyBatchStockPertenceToInBoundOrder(inBoundOrder.getBatchStockList(), inBoundOrder);
-        batchStockRepo.saveAll(inBoundOrder.getBatchStockList());
         return inBoundOrderRepo.save(updatedOrder);
     }
 
@@ -50,7 +56,7 @@ public class InBoundOrderImpService implements IinBoundOrderService {
         Optional<InBoundOrder> foundInboundOrder = inBoundOrderRepo.findById(inboundOrder.getOrderId());
         if(foundInboundOrder.isPresent()){
             inboundOrder.setOrderId(foundInboundOrder.get().getOrderId());
-        } else{
+        } else {
             inboundOrder.setOrderId(0L);
         }
         return inboundOrder;

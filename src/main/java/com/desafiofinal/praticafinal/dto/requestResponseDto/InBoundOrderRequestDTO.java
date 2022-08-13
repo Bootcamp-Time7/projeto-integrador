@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class InBoundOrderRequestDTO {
 
-    private Long orderId;
+    private long orderId;
 
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     @NotNull(message = "Manufacturing Date cannot be null. Format: yyyy/MM/dd")
