@@ -2,15 +2,20 @@ package com.desafiofinal.praticafinal.dto;
 
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class InBoundOrderDTO {
 
     private List<BatchStockDTO> batchStock;
+
     public InBoundOrderDTO(InBoundOrder inBoundOrder) {
         this.batchStock = BatchStockDTO.convertToListDto(inBoundOrder.getBatchStockList());
     }

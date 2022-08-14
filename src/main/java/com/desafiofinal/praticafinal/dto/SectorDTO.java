@@ -33,4 +33,12 @@ public class SectorDTO {
                 .sectorId(sectorDTO.sectorId)
                 .build();
     }
+
+    public static Sector convertDtoToSector (SectorDTO sectorDTO){
+        return Sector.builder()
+                .sectorId(sectorDTO.sectorId)
+                .category(sectorDTO.getCategory())
+                .capacity(sectorDTO.getCapacity())
+                .build();
+    }
 }
