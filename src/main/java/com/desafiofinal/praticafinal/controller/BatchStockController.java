@@ -1,15 +1,13 @@
 package com.desafiofinal.praticafinal.controller;
 
+import com.desafiofinal.praticafinal.dto.BatchStockDTO;
 import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.service.BatchStockImpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -83,4 +81,16 @@ public class BatchStockController {
         ResponseStock getResponse = service.getListCategoryDueDate(category,days);
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
+
+    @PutMapping("dueDate")
+    ResponseEntity<ResponseStock> transferToSector (){
+        ResponseStock getResponse = service.transferToSector();
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
+
+//    @GetMapping("dueDate")
+//    ResponseEntity<DataBaseExpired> transferSector (){
+//        DataBaseExpired getResponse = repo.getSectorExpired();
+//        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+//    }
 }

@@ -4,9 +4,13 @@ import com.desafiofinal.praticafinal.dto.queryDto.*;
 
 import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
+import com.desafiofinal.praticafinal.model.Sector;
+import com.desafiofinal.praticafinal.model.WareHouse;
 import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.repository.IProductRepo;
+import com.desafiofinal.praticafinal.repository.IWareHouseRepo;
 import com.desafiofinal.praticafinal.repository.InBoundOrderRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
@@ -24,10 +28,54 @@ public class BatchStockImpService implements IBatchStockService {
     private final IProductRepo productRepo;
 
     private final IBatchStockRepo batchStockRepo;
-    public BatchStockImpService(InBoundOrderRepo inBoundOrderRepo, IProductRepo productRepo, IBatchStockRepo batchStockRepo) {
+
+    private final IWareHouseRepo wareHouseRepo;
+
+    public BatchStockImpService(InBoundOrderRepo inBoundOrderRepo, IProductRepo productRepo, IBatchStockRepo batchStockRepo,IWareHouseRepo wareHouseRepo) {
         this.inBoundOrderRepo = inBoundOrderRepo;
         this.productRepo = productRepo;
         this.batchStockRepo = batchStockRepo;
+        this.wareHouseRepo= wareHouseRepo;
+    }
+
+    public ResponseStock transferToSector (){
+        ResponseStock responseStock = new ResponseStock();
+        List<ResponseStockQuery> list = new ArrayList<>();
+
+        List<BatchStock> batchStockList = batchStockRepo.findAll();
+        DataBaseExpired expiredSector = batchStockRepo.getSectorExpired(); //
+        WareHouse wareHouse = wareHouseRepo.findById(expiredSector.getId_warehouse()).get();
+        Sector updateSector = Sector.builder()
+                            .maxCapacity(expiredSector.getMax_capacity())
+                            .category(expiredSector.getCategory())
+                            .wareHouse(wareHouse)
+                            .sectorId(expiredSector.getSector_id())
+                            .capacity(expiredSector.getCapacity())
+                            .build(); // TODO definir como método
+
+        for(BatchStock batch: batchStockList) {
+            LocalDate batchDate = batch.getDueDate();
+
+            if(batchDate.isBefore(LocalDate.now())){
+                batch.getInBoundOrder().setSector(updateSector);
+                inBoundOrderRepo.save(batch.getInBoundOrder());
+                ResponseStockQuery vencidos = ResponseStockQuery.builder()
+                                    .productType(batch.getProduct().getProductType())
+                                    .batchId(batch.getBatchId())
+                                    .currentQuantity(batch.getCurrentQuantity())
+                                    .idProduct(batch.getProduct().getId())
+                                    .dueDate(batch.getDueDate())
+                                    .build();
+                list.add(vencidos);
+
+            }
+        }
+        if(list.isEmpty()){
+            throw new RuntimeException("Não há produtos vencidos");
+        }
+         responseStock.setDataBaseStocks(list);
+        return responseStock;
+
     }
 
     @Override
@@ -85,6 +133,8 @@ public class BatchStockImpService implements IBatchStockService {
         }
         return responseSectorQueryList;
     }
+
+
 
     private void verifyDueDatePerCategory(String category, List<BatchStock> batchListByCategory, InBoundOrder inBoundOrder) {
         String foundCategory = inBoundOrder.getSector().getCategory();

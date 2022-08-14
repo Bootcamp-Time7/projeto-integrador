@@ -35,34 +35,35 @@ public class SectorImpService {
             sector.setSectorId(0L);
         }
 
-        List<InBoundOrder> inBoundOrderList = new ArrayList<>();
 
-        for (InBoundOrder inBoundOrder: sector.getOrderList()){
-            Optional<InBoundOrder> foundOrder = inBoundOrderRepo.findById(inBoundOrder.getOrderId());
+//        List<InBoundOrder> inBoundOrderList = new ArrayList<>();
+//
+//        for (InBoundOrder inBoundOrder: sector.getOrderList()){
+//            Optional<InBoundOrder> foundOrder = inBoundOrderRepo.findById(inBoundOrder.getOrderId());
+//
+//            if(foundSector.isPresent()){
+//                inBoundOrder.setOrderId(foundOrder.get().getOrderId());
+//            }else{
+//                inBoundOrder.setOrderId(0L);
+//            }
+//
+//            InBoundOrder savedInBoundOrder = inBoundOrderRepo.save(foundOrder.get());
+//            inBoundOrderList.add(savedInBoundOrder);
+//        }
+//
+//       Optional<WareHouse> foundWareHouse = wareHouseRepo.findById(sector.getWareHouse().getWareHouseId());
+//
+//       if (foundWareHouse.isPresent()){
+//           sector.getWareHouse().setWareHouseId(foundWareHouse.get().getWareHouseId());
+//       }else{
+//           sector.getWareHouse().setWareHouseId(0L);
+//       }
+//
+//        wareHouseRepo.save(foundWareHouse.get());
+//
+//        inBoundOrderRepo.saveAll(inBoundOrderList);
 
-            if(foundSector.isPresent()){
-                inBoundOrder.setOrderId(foundOrder.get().getOrderId());
-            }else{
-                inBoundOrder.setOrderId(0L);
-            }
-
-            InBoundOrder savedInBoundOrder = inBoundOrderRepo.save(foundOrder.get());
-            inBoundOrderList.add(savedInBoundOrder);
-        }
-
-       Optional<WareHouse> foundWareHouse = wareHouseRepo.findById(sector.getWareHouse().getWareHouseId());
-
-       if (foundWareHouse.isPresent()){
-           sector.getWareHouse().setWareHouseId(foundWareHouse.get().getWareHouseId());
-       }else{
-           sector.getWareHouse().setWareHouseId(0L);
-       }
-
-        wareHouseRepo.save(foundWareHouse.get());
-
-        inBoundOrderRepo.saveAll(inBoundOrderList);
-
-        return sectorRepo.save(foundSector.get());
+        return sectorRepo.save(sector);
     }
 
 

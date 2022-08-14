@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 @ToString(exclude = {"wareHouse", "orderList"})
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class Sector {
@@ -18,7 +19,7 @@ public class Sector {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sectorId;
     private String category;
-    private double capacity;
+    private Double capacity;
 
     @OneToMany(mappedBy = "sector", cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties("sector")
@@ -29,5 +30,7 @@ public class Sector {
     @JsonIgnoreProperties("sectorList")
     private WareHouse wareHouse;
 
-    private double maxCapacity;
+    private Double maxCapacity;
+
+
 }

@@ -1,11 +1,9 @@
 package com.desafiofinal.praticafinal.repository;
 
-import com.desafiofinal.praticafinal.dto.queryDto.BatchStockSectorQuantityDTO;
-import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQuery;
-import com.desafiofinal.praticafinal.dto.queryDto.DataBaseStockQuery;
-import com.desafiofinal.praticafinal.dto.queryDto.DataBaseTotalQuantityQuery;
+import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.Product;
+import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -67,4 +65,9 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
             "where s.category = ?1\n" +
             "order by batch.due_date;", nativeQuery = true)
     List<DataBaseStockQuery> getListCategory(String category);
+
+    @Query (value = "\n" +
+            "Select sector_id, capacity, category, max_capacity, id_warehouse from sector\n" +
+            "    where category=\"Vencidos\";", nativeQuery = true)
+    DataBaseExpired getSectorExpired ();
 }

@@ -24,7 +24,7 @@ public class SectorController {
     private SectorImpService service;
 
     @PostMapping("/insert")
-    public ResponseEntity<SectorDTO> create(@RequestBody @Valid SectorDTO sectorDto) {
+    public ResponseEntity<SectorDTO> insertSector(@RequestBody @Valid SectorDTO sectorDto) {
         Sector newSector = SectorDTO.convertDtoToSector(sectorDto);
         Sector savedResponse = service.saveSector(newSector);
         return ResponseEntity.status(HttpStatus.CREATED).body(new SectorDTO(savedResponse));
