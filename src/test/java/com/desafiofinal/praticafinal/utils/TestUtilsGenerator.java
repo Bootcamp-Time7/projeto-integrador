@@ -92,4 +92,26 @@ public class TestUtilsGenerator {
                 .maxCapacity(10.0)
                 .build();
     }
+
+    public static WareHouse getWareHouse(){
+        Manager manager = Manager.builder()
+                .managerId(1L)
+                .managerName("manager")
+                .build();
+        return WareHouse.builder()
+                .wareHouseId(0L)
+                .manager(manager)
+                .build();
+    }
+
+    public static Sector getSectorVencidos(){
+
+        return Sector.builder()
+                .sectorId(0L)
+                .capacity(1.0)
+                .category("Vencidos")
+                .maxCapacity(10.0)
+                .wareHouse(getWareHouse())
+                .build();
+    }
 }

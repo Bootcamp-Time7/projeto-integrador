@@ -42,17 +42,31 @@ public class BatchStockImpService implements IBatchStockService {
 
     public ResponseStock transferToSector (){
         ResponseStock responseStock = new ResponseStock();
-        List<ResponseStockQuery> list = new ArrayList<>();
-
+        List<ResponseStockQuery> listStock = new ArrayList<>();
         List<BatchStock> batchStockList = batchStockRepo.findAll();
+
         Sector updateSector = buildWareHouse();
+
+        locateBatchStock(listStock, batchStockList, updateSector);
+
+        if(listStock.isEmpty()){
+            throw new RuntimeException("Não há produtos vencidos");
+        }
+         responseStock.setDataBaseStocks(listStock);
+        return responseStock;
+
+    }
+
+    private void locateBatchStock(List<ResponseStockQuery> listStock, List<BatchStock> batchStockList, Sector updateSector) {
 
         for(BatchStock batch: batchStockList) {
             LocalDate batchDate = batch.getDueDate();
 
             if(batchDate.isBefore(LocalDate.now())){
                 batch.getInBoundOrder().setSector(updateSector);
-                inBoundOrderRepo.save(batch.getInBoundOrder());
+
+                batchStockRepo.save(batch);
+
                 ResponseStockQuery vencidos = ResponseStockQuery.builder()
                                     .productType(batch.getProduct().getProductType())
                                     .batchId(batch.getBatchId())
@@ -60,16 +74,10 @@ public class BatchStockImpService implements IBatchStockService {
                                     .idProduct(batch.getProduct().getId())
                                     .dueDate(batch.getDueDate())
                                     .build();
-                list.add(vencidos);
+                listStock.add(vencidos);
 
             }
         }
-        if(list.isEmpty()){
-            throw new RuntimeException("Não há produtos vencidos");
-        }
-         responseStock.setDataBaseStocks(list);
-        return responseStock;
-
     }
 
     private Sector buildWareHouse() {
