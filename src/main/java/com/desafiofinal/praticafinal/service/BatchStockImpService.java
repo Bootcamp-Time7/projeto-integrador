@@ -19,6 +19,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 @Service
 public class BatchStockImpService implements IBatchStockService {
@@ -43,15 +45,7 @@ public class BatchStockImpService implements IBatchStockService {
         List<ResponseStockQuery> list = new ArrayList<>();
 
         List<BatchStock> batchStockList = batchStockRepo.findAll();
-        DataBaseExpired expiredSector = batchStockRepo.getSectorExpired(); //
-        WareHouse wareHouse = wareHouseRepo.findById(expiredSector.getId_warehouse()).get();
-        Sector updateSector = Sector.builder()
-                            .maxCapacity(expiredSector.getMax_capacity())
-                            .category(expiredSector.getCategory())
-                            .wareHouse(wareHouse)
-                            .sectorId(expiredSector.getSector_id())
-                            .capacity(expiredSector.getCapacity())
-                            .build(); // TODO definir como método
+        Sector updateSector = buildWareHouse();
 
         for(BatchStock batch: batchStockList) {
             LocalDate batchDate = batch.getDueDate();
@@ -76,6 +70,32 @@ public class BatchStockImpService implements IBatchStockService {
          responseStock.setDataBaseStocks(list);
         return responseStock;
 
+    }
+
+    private Sector buildWareHouse() {
+        DataBaseExpired expiredSector = batchStockRepo.getSectorExpired(); //
+        WareHouse wareHouse = wareHouseRepo.findById(expiredSector.getId_warehouse()).get();
+        Sector updateSector = Sector.builder()
+                            .maxCapacity(expiredSector.getMax_capacity())
+                            .category(expiredSector.getCategory())
+                            .wareHouse(wareHouse)
+                            .sectorId(expiredSector.getSector_id())
+                            .capacity(expiredSector.getCapacity())
+                            .build(); // TODO definir como método
+        return updateSector;
+    }
+
+    public String getFinantialLoss(String month){
+        List<DataBaseExpiredQuantity> expiredQuantityList = batchStockRepo.getSectorExpiredQuantity(month);
+
+        if (expiredQuantityList.isEmpty()){
+            throw new ElementNotFoundException("Não há produtos fora da validade nesse mês");
+        }
+        double currentTotal = expiredQuantityList.stream().mapToDouble(c->c.getCurrent_quantity()).sum();
+        double initialTotal = expiredQuantityList.stream().mapToDouble(c->c.getInitial_quantity()).sum();
+
+        double finantialLoss = ((initialTotal - currentTotal)/initialTotal)*100;
+        return "O prejuízo do mês " + month + " foi de " + finantialLoss + "%";
     }
 
     @Override

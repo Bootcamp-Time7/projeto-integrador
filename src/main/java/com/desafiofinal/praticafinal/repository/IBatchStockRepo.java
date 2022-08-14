@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -70,4 +72,13 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
             "Select sector_id, capacity, category, max_capacity, id_warehouse from sector\n" +
             "    where category=\"Vencidos\";", nativeQuery = true)
     DataBaseExpired getSectorExpired ();
+
+    @Query (value = "\n" +
+            "Select MONTH(due_date) as month, s.sector_id, batch_stock.current_quantity, batch_stock.initial_quantity from batch_stock\n" +
+            "join in_bound_order on batch_stock.id_inboundorder = in_bound_order.order_id\n" +
+            "join sector as s on s.sector_id = in_bound_order.id_sector\n" +
+            "where in_bound_order.id_sector = 13\n" +
+            "AND month(due_date)=?1\n;", nativeQuery = true)
+    List<DataBaseExpiredQuantity> getSectorExpiredQuantity (String month);
+
 }

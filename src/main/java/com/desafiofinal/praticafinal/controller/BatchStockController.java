@@ -9,13 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
  * This class holds all endpoints related to fillter and display products
  * @author Yago, Mônica
  * @version 1.0.0
- * @see Requirement 3, 4 and 5 docs: https://br-playground.digitalhouse.com/course/86ba8e00-da33-420a-a62a-02d4a77c55e8/unit/f1c410da-fa91-44a9-b216-b6b93b85246c/lesson/6d242a1a-4961-4105-be9c-9189eb8eb6bc/topic/efd4119b-f679-48db-b77a-f7f18e0ca1c6
+ * @see  3, 4 and 5 docs: https://br-playground.digitalhouse.com/course/86ba8e00-da33-420a-a62a-02d4a77c55e8/unit/f1c410da-fa91-44a9-b216-b6b93b85246c/lesson/6d242a1a-4961-4105-be9c-9189eb8eb6bc/topic/efd4119b-f679-48db-b77a-f7f18e0ca1c6
  */
 @RestController
 @RequestMapping("/api/v1/fresh-products/sectorProducts")
@@ -88,9 +90,15 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
-//    @GetMapping("dueDate")
-//    ResponseEntity<DataBaseExpired> transferSector (){
-//        DataBaseExpired getResponse = repo.getSectorExpired();
+//    @GetMapping("/expired/{month}")
+//    ResponseEntity<List<DataBaseExpiredQuantity>> expiredQuantitySector (@PathVariable String month){
+//        List<DataBaseExpiredQuantity> getResponse = repo.getSectorExpiredQuantity(month);
 //        return new ResponseEntity<>(getResponse, HttpStatus.OK);
 //    }
+
+    @GetMapping("/expired/{month}")
+    ResponseEntity<String> expiredQuantitySector (@PathVariable String month){
+        String getResponse = service.getFinantialLoss(month);
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
 }
