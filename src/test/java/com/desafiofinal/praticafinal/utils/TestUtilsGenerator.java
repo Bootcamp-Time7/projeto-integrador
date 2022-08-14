@@ -49,6 +49,23 @@ public class TestUtilsGenerator {
                 .build();
     }
 
+    public static BatchStock getBatchStockWithoutOrder(){
+        Product product = getProductWhitId();
+        InBoundOrder inBoundOrder = new InBoundOrder();
+        inBoundOrder.setOrderId(3L);
+
+        return BatchStock.builder()
+                .batchId(1L)
+                .product(product)
+                .currentTemperature(1F)
+                .minimumTemperature(1F)
+                .initialQuantity(1)
+                .manufacturingDate(LocalDate.parse("2023-01-01"))
+                .dueDate(LocalDate.parse("2023-01-01"))
+                .inBoundOrder(inBoundOrder)
+                .build();
+    }
+
     public static List<BatchStock> getBatchStockList() {
         BatchStock batchStock = getBatchStock();
         BatchStock batchStock1 = getBatchStock();
