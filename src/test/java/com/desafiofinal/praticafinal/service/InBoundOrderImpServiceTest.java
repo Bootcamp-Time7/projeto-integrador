@@ -2,7 +2,6 @@ package com.desafiofinal.praticafinal.service;
 
 import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
-import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
 import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.repository.IProductRepo;
@@ -18,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -52,7 +50,7 @@ class InBoundOrderImpServiceTest {
         BDDMockito.when(productRepo.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.ofNullable(TestUtilsGenerator.getProductWhitId()));
         BDDMockito.when(batchStockRepo.findById(ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getBatchStock()));
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getBatchStockAndSectorWithCapacity()));
         BDDMockito.when(sectorRepo.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.ofNullable(TestUtilsGenerator.getSector()));
 
@@ -113,7 +111,7 @@ class InBoundOrderImpServiceTest {
         BDDMockito.when(productRepo.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.ofNullable(TestUtilsGenerator.getProductWhitId()));
         BDDMockito.when(batchStockRepo.findById(ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getBatchStock()));
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getBatchStockAndSectorWithCapacity()));
         BDDMockito.when(sectorRepo.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.ofNullable(TestUtilsGenerator.getSector()));
 
@@ -138,5 +136,44 @@ class InBoundOrderImpServiceTest {
                         -> inBoundOrderImpService.updateInBoundOrder(order))
                 .isInstanceOf(ElementNotFoundException.class)
                 .hasMessageContaining("Inbound does not exists");
+    }
+
+    @Test
+    void updateInBoundOrder_throwException_whenBatchStockNotExists(){
+        BDDMockito.when(inBoundOrderRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getOrderWithId()));
+        BDDMockito.when(inBoundOrderRepo.save(ArgumentMatchers.any(InBoundOrder.class)))
+                .thenReturn(TestUtilsGenerator.getOrderWithId());
+        BDDMockito.when(productRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getProductWhitId()));
+        BDDMockito.when(sectorRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getSector()));
+
+        InBoundOrder order = TestUtilsGenerator.getOrderWithId();
+
+        Assertions.assertThatThrownBy(()
+                        -> inBoundOrderImpService.updateInBoundOrder(order))
+                .isInstanceOf(ElementNotFoundException.class)
+                .hasMessageContaining("Batch stock does not exist");
+    }
+    @Test
+    void updateInBoundOrder_throwException_whenBatchStockNotBelongsToTheOrder(){
+        BDDMockito.when(inBoundOrderRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getOrderWithId()));
+        BDDMockito.when(inBoundOrderRepo.save(ArgumentMatchers.any(InBoundOrder.class)))
+                .thenReturn(TestUtilsGenerator.getOrderWithId());
+        BDDMockito.when(batchStockRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getBatchStockWithoutOrder()));
+        BDDMockito.when(productRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getProductWhitId()));
+        BDDMockito.when(sectorRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getSector()));
+
+        InBoundOrder order = TestUtilsGenerator.getOrderWithId();
+
+        Assertions.assertThatThrownBy(()
+                        -> inBoundOrderImpService.updateInBoundOrder(order))
+                .isInstanceOf(ElementNotFoundException.class)
+                .hasMessageContaining("Batch stock does not belong to this inbound order");
     }
 }
