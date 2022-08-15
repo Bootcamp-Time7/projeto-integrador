@@ -4,10 +4,12 @@ import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.Product;
 import org.hibernate.sql.Select;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -80,5 +82,6 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
             "where in_bound_order.id_sector = 13\n" +
             "AND month(due_date)=?1\n;", nativeQuery = true)
     List<DataBaseExpiredQuantity> getSectorExpiredQuantity (String month);
+
 
 }

@@ -1,6 +1,7 @@
 package com.desafiofinal.praticafinal.service;
 
 
+import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
 import com.desafiofinal.praticafinal.model.Sector;
 import com.desafiofinal.praticafinal.repository.ISectorRepo;
@@ -8,13 +9,19 @@ import com.desafiofinal.praticafinal.repository.IWareHouseRepo;
 import com.desafiofinal.praticafinal.utils.TestUtilsGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class SectorImpServiceTest {
 
     @InjectMocks
@@ -23,15 +30,13 @@ class SectorImpServiceTest {
     @Mock
     ISectorRepo sectorRepo;
 
-    @Mock
-    IWareHouseRepo wareHouseRepo;
 
     @Test
     void create_returnNewSector_whenSectorDoesNotExist() {
-        BDDMockito.when(sectorRepo.findById(ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getSectorVencidos()));
+        BDDMockito.when(sectorRepo.save(ArgumentMatchers.any(Sector.class)))
+                .thenReturn(TestUtilsGenerator.getSectorExpiredWithId());
 
-        Sector newSector = TestUtilsGenerator.getSectorVencidos();
+        Sector newSector = TestUtilsGenerator.getSectorExpired();
 
         Sector savedSector = sectorImpService.createSector(newSector);
 
@@ -46,14 +51,14 @@ class SectorImpServiceTest {
 
     @Test
     void create_returnException_whenSectorAlreadyExists (){
-        BDDMockito.when(sectorRepo.findById(ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getSectorVencidos()));
+        BDDMockito.when(sectorRepo.findByCategory(ArgumentMatchers.anyString()))
+                .thenReturn(TestUtilsGenerator.getSectorExpiredWithId());
 
-        Sector newSector = TestUtilsGenerator.getSectorVencidos();
+        Sector newSector = TestUtilsGenerator.getSectorExpiredWithId();
 
                 Assertions.assertThatThrownBy(()
                 -> sectorImpService.createSector(newSector))
-                .isInstanceOf(ElementNotFoundException.class)
-                .hasMessageContaining("Id does not exists");
+                .isInstanceOf(ElementAlreadyExistsException.class)
+                .hasMessageContaining("This sector already exists");
     }
 }

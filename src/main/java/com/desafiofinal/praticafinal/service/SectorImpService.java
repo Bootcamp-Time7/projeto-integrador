@@ -1,5 +1,6 @@
 package com.desafiofinal.praticafinal.service;
 
+import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
 import com.desafiofinal.praticafinal.model.Sector;
 import com.desafiofinal.praticafinal.repository.ISectorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class SectorImpService {
         Optional<Sector> foundSector = Optional.ofNullable(sectorRepo.findByCategory(sector.getCategory()));
 
         if(foundSector.isPresent()){
-           throw new RuntimeException("O setor já existe");
+           throw new ElementAlreadyExistsException("This sector already exists");
         } else {
             sector.setSectorId(0L);
         }

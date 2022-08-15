@@ -15,7 +15,7 @@ import java.util.List;
 public class InBoundOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderId;
+    private Long orderId;
 
     private LocalDate dateTime;
 

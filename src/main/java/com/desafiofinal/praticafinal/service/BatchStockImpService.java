@@ -18,6 +18,7 @@ import com.desafiofinal.praticafinal.model.InBoundOrder;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -50,7 +51,7 @@ public class BatchStockImpService implements IBatchStockService {
         locateBatchStock(listStock, batchStockList, updateSector);
 
         if(listStock.isEmpty()){
-            throw new RuntimeException("Não há produtos vencidos");
+            throw new RuntimeException("There are no expired products");
         }
          responseStock.setDataBaseStocks(listStock);
         return responseStock;
@@ -81,15 +82,17 @@ public class BatchStockImpService implements IBatchStockService {
     }
 
     private Sector buildWareHouse() {
-        DataBaseExpired expiredSector = batchStockRepo.getSectorExpired(); //
-        WareHouse wareHouse = wareHouseRepo.findById(expiredSector.getId_warehouse()).get();
+        DataBaseExpired expiredSector = batchStockRepo.getSectorExpired();
+        WareHouse wareHouse;
+        wareHouse = wareHouseRepo.findById(expiredSector.getId_warehouse()).orElseThrow(() -> new ElementNotFoundException("The warehouse was not found"));
+        System.out.println("warehouse:" + wareHouse);
         Sector updateSector = Sector.builder()
                             .maxCapacity(expiredSector.getMax_capacity())
                             .category(expiredSector.getCategory())
                             .wareHouse(wareHouse)
                             .sectorId(expiredSector.getSector_id())
                             .capacity(expiredSector.getCapacity())
-                            .build(); // TODO definir como método
+                            .build();
         return updateSector;
     }
 
@@ -306,6 +309,8 @@ public class BatchStockImpService implements IBatchStockService {
             }
         }
     }
+
+
 
 
 }
