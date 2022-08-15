@@ -31,7 +31,7 @@ public class SellerController {
      * @param seller id(Long), SellerName(String), ProductList(List of products)
      * @return HTML Response 201: Created
      */
-    @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<SellerDTO> insertSeller(@RequestBody SellerDTO seller){
         Seller newSeller = SellerDTO.convertToSeller(seller);

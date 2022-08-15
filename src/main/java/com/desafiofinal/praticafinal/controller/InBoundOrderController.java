@@ -32,7 +32,7 @@ public class InBoundOrderController {
      * @return  HTML Response 201: Created
      * @throws Exception ElementAlreadyExistException 
      */
-    @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
     @PostMapping("/insert")
     public ResponseEntity<InBoundOrderResponseDTO> create(@RequestBody @Valid InBoundOrderRequestDTO newOrder) {
         InBoundOrder newInBoundOrder = InBoundOrderRequestDTO.convertDTOToInboundOrder(newOrder);
@@ -47,7 +47,7 @@ public class InBoundOrderController {
      * @return HTML Response 204: Updated
      * @throws Exception ElementNotFoundException
      */
-    @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
     @PutMapping("/update")
     public ResponseEntity<InBoundOrderResponseDTO> updateInBoundOrder(@RequestBody @Valid InBoundOrderRequestDTO updateOrder) {
         InBoundOrder updatedInBoundOrder = InBoundOrderRequestDTO.convertDTOToInboundOrder(updateOrder);

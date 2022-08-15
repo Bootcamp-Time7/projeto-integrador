@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+// @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Bean
@@ -42,6 +42,9 @@ public class SecurityConfig {
 
     @Bean 
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        PasswordEncoder password = new BCryptPasswordEncoder();        
+        System.out.println("senha do config:  " + password);
+        return password;
+        
     }
 }
