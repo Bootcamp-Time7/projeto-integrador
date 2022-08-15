@@ -83,17 +83,23 @@ public class BatchStockImpService implements IBatchStockService {
 
     private Sector buildWareHouse() {
         DataBaseExpired expiredSector = batchStockRepo.getSectorExpired();
-        WareHouse wareHouse;
-        wareHouse = wareHouseRepo.findById(expiredSector.getId_warehouse()).orElseThrow(() -> new ElementNotFoundException("The warehouse was not found"));
-        System.out.println("warehouse:" + wareHouse);
-        Sector updateSector = Sector.builder()
-                            .maxCapacity(expiredSector.getMax_capacity())
-                            .category(expiredSector.getCategory())
-                            .wareHouse(wareHouse)
-                            .sectorId(expiredSector.getSector_id())
-                            .capacity(expiredSector.getCapacity())
-                            .build();
-        return updateSector;
+        Optional<WareHouse> wareHouse;
+        wareHouse = wareHouseRepo.findById(expiredSector.getId_warehouse());
+        if(wareHouse.isPresent()) {
+            System.out.println("warehouse:" + wareHouse);
+            Sector updateSector = Sector.builder()
+                    .maxCapacity(expiredSector.getMax_capacity())
+                    .category(expiredSector.getCategory())
+                    .wareHouse(wareHouse.get())
+                    .sectorId(expiredSector.getSector_id())
+                    .capacity(expiredSector.getCapacity())
+                    .build();
+            return updateSector;
+        }
+        else{
+            throw new ElementNotFoundException("Warehouse not found");
+        }
+
     }
 
     public String getFinantialLoss(String month){

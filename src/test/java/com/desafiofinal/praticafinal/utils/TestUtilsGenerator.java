@@ -219,19 +219,19 @@ public class TestUtilsGenerator {
 
         return DataBaseExpiredQuantityImp.builder()
                 .month("10")
-                .currentQuantity(10L)
-                .initialQuantity(20L)
-                .sectorId(13L)
+                .current_quantity(10L)
+                .initial_quantity(20L)
+                .sector_id(13L)
                 .build();
     }
      public static List<DataBaseExpiredQuantityImp> getDataExpiredQuantityList(){
         DataBaseExpiredQuantityImp data = getDataExpiredQuantity();
 
         DataBaseExpiredQuantityImp data1 =getDataExpiredQuantity();
-        data1.setSectorId(1L);
+        data1.setSector_id(1L);
 
         DataBaseExpiredQuantityImp data2 = getDataExpiredQuantity();
-        data2.setSectorId(2L);
+        data2.setSector_id(2L);
 
         List<DataBaseExpiredQuantityImp> list = new ArrayList<>();
         list.add(data);

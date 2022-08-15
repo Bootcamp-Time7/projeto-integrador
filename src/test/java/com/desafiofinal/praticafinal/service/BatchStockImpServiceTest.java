@@ -49,8 +49,8 @@ class BatchStockImpServiceTest {
         BDDMockito.when(batchStockRepo.getSectorExpired())
                 .thenReturn(TestUtilsGenerator.getSectorExpiredWithIdImp());
 
-//        BDDMockito.when(wareHouseRepo.findById(ArgumentMatchers.anyLong()))
-//                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getWareHouse()));
+        BDDMockito.when(wareHouseRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getWareHouse()));
 
         ResponseStock foundResponseStock = TestUtilsGenerator.getResponseStock();
 
@@ -62,14 +62,15 @@ class BatchStockImpServiceTest {
 
     }
 
-//    @Test
-//    void getFinantialLoss() {
-//        BDDMockito.when(batchStockRepo.getSectorExpiredQuantity(ArgumentMatchers.anyString()))
-//                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getDataExpiredQuantityList()));
-//
-//        List<DataBaseExpiredQuantityImp> dataBaseExpiredQuantities = TestUtilsGenerator.getDataExpiredQuantityList();
-//
-//        String finantialLoss = batchStockImpServicee.getFinantialLoss("10");
-//        Assertions.assertThat(finantialLoss).isEqualTo("O prejuízo do mês 10 foi de 33%");
-//    }
+    @Test
+    void getFinantialLoss() {
+        BDDMockito.when(batchStockRepo.getSectorExpiredQuantity(ArgumentMatchers.anyString()))
+                .thenReturn((TestUtilsGenerator.getDataExpiredQuantityList()));
+
+        //List<DataBaseExpiredQuantityImp> dataBaseExpiredQuantities = TestUtilsGenerator.getDataExpiredQuantityList();
+
+        String finantialLoss = batchStockImpServicee.getFinantialLoss("10");
+        Assertions.assertThat(finantialLoss).isEqualTo("O prejuízo do mês 10 foi de 33.0%");
+
+    }
 }

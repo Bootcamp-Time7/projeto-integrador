@@ -8,15 +8,15 @@ import lombok.Data;
 public class DataBaseExpiredQuantityImp implements DataBaseExpiredQuantity{
 
     private String month;
-    private Long sectorId;
-    private Long currentQuantity;
-    private Long initialQuantity;
+    private Long sector_id;
+    private Long current_quantity;
+    private Long initial_quantity;
 
     public DataBaseExpiredQuantityImp(String month, Long sectorId, Long currentQuantity, Long initialQuantity) {
         this.month = getMonth();
-        this.sectorId = getSector_id();
-        this.currentQuantity = getCurrent_quantity();
-        this.initialQuantity = getInitial_quantity();
+        this.sector_id = getSector_id();
+        this.current_quantity = getCurrent_quantity();
+        this.initial_quantity = getInitial_quantity();
     }
 
     @Override
@@ -27,16 +27,16 @@ public class DataBaseExpiredQuantityImp implements DataBaseExpiredQuantity{
 
     @Override
     public Long getSector_id() {
-        return this.sectorId;
+        return this.sector_id;
     }
 
     @Override
     public Long getCurrent_quantity() {
-        return this.currentQuantity;
+        return this.current_quantity;
     }
 
     @Override
     public Long getInitial_quantity() {
-        return this.initialQuantity;
+        return this.initial_quantity;
     }
 }
