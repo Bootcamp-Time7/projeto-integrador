@@ -5,6 +5,7 @@ import com.desafiofinal.praticafinal.model.Seller;
 import com.desafiofinal.praticafinal.service.ISellerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class SellerController {
      * @param seller id(Long), SellerName(String), ProductList(List of products)
      * @return HTML Response 201: Created
      */
+    @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<SellerDTO> insertSeller(@RequestBody SellerDTO seller){
         Seller newSeller = SellerDTO.convertToSeller(seller);

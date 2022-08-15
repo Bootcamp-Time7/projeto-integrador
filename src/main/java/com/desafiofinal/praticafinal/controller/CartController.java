@@ -7,6 +7,7 @@ import com.desafiofinal.praticafinal.model.Cart;
 import com.desafiofinal.praticafinal.service.ICartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ public class CartController {
      * @return HTML Response 201: Created
      * @throws Exception
      */
-
+    @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_ADMIN')")
     @PostMapping("/insert")
     ResponseEntity<Double> createNewCart(@RequestBody @Valid CartDto cartDto) {
         Cart newCart = CartDto.convertDtoToCart(cartDto);
@@ -47,7 +48,7 @@ public class CartController {
      * @return HTML Response 201: Created
      * @throws Exception
      */
-
+    @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_ADMIN')")
     @GetMapping("/ListProducts/{purchaseId}")
     ResponseEntity<List<BatchStockResponseDTO>> getProducts(@PathVariable long purchaseId) throws Exception {
         List<BatchStock> getResponse = service.getProducts(purchaseId);
@@ -61,6 +62,7 @@ public class CartController {
      * @return HTML Response 201: Created
      * @throws Exception
      */
+    @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_ADMIN')")
     @PutMapping("/update/{purchaseId}")
     ResponseEntity<String> updateStatus (@PathVariable long purchaseId) throws Exception {
         String responseCart = service.updateStatus(purchaseId);
