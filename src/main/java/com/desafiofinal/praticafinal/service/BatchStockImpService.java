@@ -108,7 +108,7 @@ public class BatchStockImpService implements IBatchStockService {
         List<DataBaseExpiredQuantity> expiredQuantityList = batchStockRepo.getSectorExpiredQuantity(month);
 
         if (expiredQuantityList.isEmpty()){
-            throw new ElementNotFoundException("Não há produtos fora da validade nesse mês");
+            throw new ElementNotFoundException("There are no expired products this month");
         }
         double currentTotal = expiredQuantityList.stream().mapToDouble(c->c.getCurrent_quantity()).sum();
         double initialTotal = expiredQuantityList.stream().mapToDouble(c->c.getInitial_quantity()).sum();

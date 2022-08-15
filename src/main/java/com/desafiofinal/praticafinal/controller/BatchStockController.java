@@ -90,21 +90,15 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
-//    @GetMapping("/expired/{month}")
-//    ResponseEntity<List<DataBaseExpiredQuantity>> expiredQuantitySector (@PathVariable String month){
-//        List<DataBaseExpiredQuantity> getResponse = repo.getSectorExpiredQuantity(month);
-//        return new ResponseEntity<>(getResponse, HttpStatus.OK);
-//    }
-
     @GetMapping("/expired/{month}")
     ResponseEntity<String> expiredQuantitySector (@PathVariable String month){
         String getResponse = service.getFinantialLoss(month);
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
-//    @GetMapping
-//    ResponseEntity<Double> verifyRegression (){
-//        Double getResponse = service.getAnualLoss();
-//        return new ResponseEntity<>(getResponse, HttpStatus.OK);
-//    }
+    @GetMapping
+    ResponseEntity<String> verifyRegression (){
+        String getResponse = service.getAnualLoss();
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
 }

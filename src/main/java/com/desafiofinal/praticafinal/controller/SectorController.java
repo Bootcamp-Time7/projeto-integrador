@@ -32,9 +32,4 @@ public class SectorController {
 
     }
 
-    @GetMapping
-    ResponseEntity<String> verifyRegression (){
-        String getResponse = serviceb.getAnualLoss();
-        return new ResponseEntity<>(getResponse, HttpStatus.OK);
-    }
 }
