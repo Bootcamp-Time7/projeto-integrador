@@ -6,7 +6,6 @@ import com.desafiofinal.praticafinal.service.BatchStockImpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,7 @@ public class BatchStockController {
      * @param productId A long.
      * @return HTML Response 200: OK
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+  
     @GetMapping("/{productId}")
     ResponseEntity<List<ResponseSectorQuery>> getBatchSector(@PathVariable long productId) {
         List<ResponseSectorQuery> getResponse = service.listBatchSector(productId);
@@ -48,7 +47,7 @@ public class BatchStockController {
      * @return HTML response 200: OK
      * @throws Exception ElementAlreadyExistsException
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+  
     @GetMapping("/{productId}/{string}")
     ResponseEntity <List<ResponseSectorQuery>> getBatchSectorOrdered(@PathVariable long productId, @PathVariable String string) throws Exception {
         List<ResponseSectorQuery> getResponse = service.listBatchSectorOrdered(productId, string);
@@ -59,7 +58,7 @@ public class BatchStockController {
      * @param productId A long.
      * @return HTML response 200: OK
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+  
     @GetMapping("sector/{productId}")
     ResponseEntity<ResponseSectorTotalQuantity> getTotalQuantitySector(@PathVariable long productId)  {
         ResponseSectorTotalQuantity getResponse = service.getTotalQuantity(productId);
@@ -71,7 +70,7 @@ public class BatchStockController {
      * @param days A long.
      * @return HTML status 200: OK
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+  
     @GetMapping("stockByDays/{sectorId}/{days}")
     ResponseEntity<ResponseStock> getStockByDueDate(@PathVariable Long sectorId, @PathVariable Long days)  {
        ResponseStock getResponse = service.getListDueDate(sectorId, days);
@@ -83,7 +82,7 @@ public class BatchStockController {
      * @param days A long.
      * @return HTML status 200: ok
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+  
     @GetMapping("stockByCategoryDays/{category}/{days}")
     ResponseEntity<ResponseStock> getCategoryDueDate(@PathVariable String category, @PathVariable Long days)  {
         ResponseStock getResponse = service.getListCategoryDueDate(category,days);

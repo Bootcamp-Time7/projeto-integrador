@@ -8,7 +8,6 @@ import com.desafiofinal.praticafinal.service.IBatchStockService;
 import com.desafiofinal.praticafinal.service.IProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class ProductController {
      * @param product ProductName(String), ProductType(String), ValidateDate(LocalDate), Price(double), IdSeller(Long), Bulk(double).
      * @return HTML Response 201: Created
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+
     @PostMapping
     public ResponseEntity<ProductDTO> insertProduct(@RequestBody ProductDTO productDTO){
         Product newProduct = ProductDTO.convertDtoToProduct(productDTO);
@@ -48,7 +47,7 @@ public class ProductController {
      * This route lists all products
      * @return HTML Response 201: Created
      */
-    // @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_SELLER', 'ROLE_ADMIN')")
+
     @GetMapping("/products")
     ResponseEntity<List<ProductDTO>> getAllProducts(){
         List<ProductDTO> response = ProductDTO.convertToDTO(service.listAllProducts());
@@ -62,7 +61,7 @@ public class ProductController {
      * @return HTML Response 201: Created
      * @throws Exception 
      */
-    // @PreAuthorize("hasAnyRole('ROLE_BUYER', 'ROLE_SELLER', 'ROLE_ADMIN')")
+
     @GetMapping("/{category}")
     ResponseEntity<List<BatchStockResponseDTO>> getProductBySector(@PathVariable String category)throws Exception{
         List<BatchStock> response = batchStockService.listBatchStockByCategory(category);

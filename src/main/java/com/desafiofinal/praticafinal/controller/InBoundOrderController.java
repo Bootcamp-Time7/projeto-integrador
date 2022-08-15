@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.validation.Valid;
 
@@ -32,7 +31,6 @@ public class InBoundOrderController {
      * @return  HTML Response 201: Created
      * @throws Exception ElementAlreadyExistException 
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
     @PostMapping("/insert")
     public ResponseEntity<InBoundOrderResponseDTO> create(@RequestBody @Valid InBoundOrderRequestDTO newOrder) {
         InBoundOrder newInBoundOrder = InBoundOrderRequestDTO.convertDTOToInboundOrder(newOrder);
@@ -47,7 +45,6 @@ public class InBoundOrderController {
      * @return HTML Response 204: Updated
      * @throws Exception ElementNotFoundException
      */
-    // @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
     @PutMapping("/update")
     public ResponseEntity<InBoundOrderResponseDTO> updateInBoundOrder(@RequestBody @Valid InBoundOrderRequestDTO updateOrder) {
         InBoundOrder updatedInBoundOrder = InBoundOrderRequestDTO.convertDTOToInboundOrder(updateOrder);
