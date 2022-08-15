@@ -117,52 +117,63 @@ public class BatchStockImpService implements IBatchStockService {
         return "O prejuízo do mês " + month + " foi de " + finantialLoss + "%";
     }
 
-    public Double getFinantialLoss2(String month){
+    private Double getAllLoss(String month){
         List<DataBaseExpiredQuantity> list = batchStockRepo.getSectorExpiredQuantity(month);
+        if (list.isEmpty()){
+            return 0.0;
+        }
         double currentTotal = list.stream().mapToDouble(c->c.getCurrent_quantity()).sum();
         double initialTotal = list.stream().mapToDouble(c->c.getInitial_quantity()).sum();
 
         double finantialLoss = ((initialTotal - currentTotal)/initialTotal)*100;
         return finantialLoss;
     }
-    public Double linearRegression()
+
+    public String getAnualLoss()
     {
         List<Integer> month =  new ArrayList<>();
-       // month.add(1);
+        month.add(1);
         month.add(2);
-      //  month.add(3);
+        month.add(3);
         month.add(4);
-     //   month.add(5);
-      //  month.add(6);
-      //  month.add(7);
+        month.add(5);
+        month.add(6);
+        month.add(7);
         month.add(8);
-      //  month.add(9);
+        month.add(9);
         month.add(10);
-      //  month.add(11);
-      //  month.add(12);
+        month.add(11);
+        month.add(12);
 
         List<Double> loss = new ArrayList<>();
-      //  loss.add(getFinantialLoss2("1"));
-        loss.add(getFinantialLoss2("2"));
-      //  loss.add(getFinantialLoss2("3"));
-        loss.add(getFinantialLoss2("4"));
-      //  loss.add(getFinantialLoss2("5"));
-      //  loss.add(getFinantialLoss2("6"));
-      //  loss.add(getFinantialLoss2("7"));
-        loss.add(getFinantialLoss2("8"));
-      //  loss.add(getFinantialLoss2("9"));
-        loss.add(getFinantialLoss2("10"));
-       // loss.add(getFinantialLoss2("11"));
-      //  loss.add(getFinantialLoss2("12"));
+        loss.add(getAllLoss("1"));
+        loss.add(getAllLoss("2"));
+        loss.add(getAllLoss("3"));
+        loss.add(getAllLoss("4"));
+        loss.add(getAllLoss("5"));
+        loss.add(getAllLoss("6"));
+        loss.add(getAllLoss("7"));
+        loss.add(getAllLoss("8"));
+        loss.add(getAllLoss("9"));
+        loss.add(getAllLoss("10"));
+        loss.add(getAllLoss("11"));
+        loss.add(getAllLoss("12"));
         System.out.println(loss);
         int n = month.size();
 
         // sum of array x
+
         int sx = month.stream().mapToInt(m->m).sum();
 
-        // sum of array y
-        double sy =  month.stream().mapToDouble(l->l).sum();
+        System.out.println(sx);
 
+        // sum of array y
+        double sy =0 ;
+        for(double lo : loss){
+            sy =  loss.stream().mapToDouble(l->lo).sum();
+        }
+
+        System.out.println(sy);
         // for sum of product of x and y
         int sxsy = 0;
 
@@ -174,7 +185,6 @@ public class BatchStockImpService implements IBatchStockService {
         }
         double b = (n * sxsy - sx * sy)
                 / (n * sx2 - sx * sx);
-
 
         double k = month.size();
         Double meanX = month.stream().mapToDouble(m->m).sum() / k;
@@ -191,40 +201,8 @@ public class BatchStockImpService implements IBatchStockService {
         System.out.printf("%.3f", b);
         System.out.print("*X");
 
-        return a;
+        return "The anual finantial loss is predicted by the following line equation: Y = " + "%.5f" + a + "%.3f" + b + "*x";
     }
-
-
-//    public Long linearRegression(){
-//        List<Integer> month =  new ArrayList<>();
-//        month.add(1);
-//        month.add(2);
-//        month.add(3);
-//        month.add(4);
-//        month.add(5);
-//        month.add(6);
-//        month.add(7);
-//        month.add(8);
-//        month.add(9);
-//        month.add(10);
-//        month.add(11);
-//        month.add(12);
-//        List<Double> loss = new ArrayList<>();
-//        loss.add(getFinantialLoss2("1"));
-//        loss.add(getFinantialLoss2("2"));
-//        loss.add(getFinantialLoss2("3"));
-//        loss.add(getFinantialLoss2("4"));
-//        loss.add(getFinantialLoss2("5"));
-//        loss.add(getFinantialLoss2("6"));
-//        loss.add(getFinantialLoss2("7"));
-//        loss.add(getFinantialLoss2("8"));
-//        loss.add(getFinantialLoss2("9"));
-//        loss.add(getFinantialLoss2("10"));
-//        loss.add(getFinantialLoss2("11"));
-//        loss.add(getFinantialLoss2("12"));
-//
-//
-//    }
 
     @Override
     public List<BatchStock> listBatchStockByCategory (String category) {
