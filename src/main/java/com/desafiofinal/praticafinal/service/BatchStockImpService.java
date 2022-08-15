@@ -200,8 +200,8 @@ public class BatchStockImpService implements IBatchStockService {
         System.out.print(" + ");
         System.out.printf("%.3f", b);
         System.out.print("*X");
+        return "The anual finantial loss is predicted by the following line equation: Y = " + a + "+" + b + "*x";
 
-        return "The anual finantial loss is predicted by the following line equation: Y = " + "%.5f" + a + "%.3f" + b + "*x";
     }
 
     @Override

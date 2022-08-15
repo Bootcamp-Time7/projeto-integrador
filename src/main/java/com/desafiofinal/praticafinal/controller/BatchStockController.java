@@ -102,9 +102,9 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/products/finantial")
-    ResponseEntity<String> verifyRegression (){
-        String getResponse = service.getAnualLoss();
-        return new ResponseEntity<>(getResponse, HttpStatus.OK);
-    }
+//    @GetMapping
+//    ResponseEntity<Double> verifyRegression (){
+//        Double getResponse = service.getAnualLoss();
+//        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+//    }
 }
