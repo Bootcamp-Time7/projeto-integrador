@@ -53,7 +53,7 @@ public class BatchStockImpService implements IBatchStockService {
         locateBatchStock(listStock, batchStockList, updateSector);
 
         if(listStock.isEmpty()){
-            throw new RuntimeException("There are no expired products");
+            throw new ElementNotFoundException("There are no expired products");
         }
          responseStock.setDataBaseStocks(listStock);
         return responseStock;
@@ -200,7 +200,7 @@ public class BatchStockImpService implements IBatchStockService {
         System.out.print(" + ");
         System.out.printf("%.3f", b);
         System.out.print("*X");
-        return "The anual finantial loss is predicted by the following line equation: Y = " + a + "+" + b + "*x";
+        return "The anual finantial loss is predicted by the following line equation: Y = " + a + " + " + b + "*x ";
 
     }
 

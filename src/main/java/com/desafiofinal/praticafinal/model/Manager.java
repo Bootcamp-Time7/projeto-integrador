@@ -1,15 +1,16 @@
+
+
 package com.desafiofinal.praticafinal.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +21,7 @@ public class Manager {
     private String managerName;
 
     @OneToOne (mappedBy = "manager", cascade = CascadeType.REFRESH)
+    @JsonIgnore
+
     private WareHouse wareHouse;
 }
