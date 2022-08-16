@@ -334,5 +334,33 @@ public class TestUtilsGenerator {
         return responselist;
     }
 
+    public static DataBaseStockQuery getDataBaseStockQuery() {
+
+        return DataBaseStockQueryImp.builder()
+                .productType("FF")
+                .sectorId(1L)
+                .batchId(1L)
+                .currentQuantity(300L)
+                .dueDate(LocalDate.parse("2023-02-02"))
+                .productId(1L)
+                .build();
+    }
+
+//    public static List<DataBaseStockQuery> getListDataStockQueryImp (){
+//        DataBaseStockQuery = new DataBaseQueryImp()
+//        DataBaseStockQueryImp stockQuery = getDataBaseStockQuery();
+//        DataBaseStockQueryImp stockQuery1 =getDataBaseStockQuery();
+//        stockQuery1.setSectorId(1L);
+//
+//        DataBaseStockQueryImp stockQuery2 = getDataBaseStockQuery();
+//        stockQuery2.setSectorId(2L);
+//
+//
+//        List<DataBaseStockQueryImp> stockQueryList = new ArrayList<>();
+//        stockQueryList.add(stockQuery);
+//        stockQueryList.add(stockQuery1);
+//        stockQueryList.add(stockQuery2);
+//        return stockQueryList;
+//    }
 
 }

@@ -51,7 +51,7 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
     List<DataBaseTotalQuantityQuery> getListQuantity(long id);
 
     @Query(value = "\n" +
-            "SELECT batch.batch_id, batch.id_product, p.product_type, batch.due_date, batch.current_quantity FROM batch_stock as batch\n" +
+            "SELECT batch.batch_id, batch.id_product, p.product_type, batch.due_date, batch.current_quantity, s.sector_id FROM batch_stock as batch\n" +
             "join in_bound_order on batch.id_inboundorder = in_bound_order.order_id\n" +
             "join product as p on p.id = batch.id_product\n" +
             "join sector as s on in_bound_order.id_sector = s.sector_id\n" +

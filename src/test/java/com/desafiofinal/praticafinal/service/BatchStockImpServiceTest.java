@@ -92,7 +92,6 @@ class BatchStockImpServiceTest {
     @Test
     void listBatchSectorOrdered() {
 
-
     }
 
     @Test
@@ -101,6 +100,9 @@ class BatchStockImpServiceTest {
 
     @Test
     void getListDueDate() {
+        BDDMockito.when(batchStockRepo.getListDueDate(ArgumentMatchers.anyLong()))
+                .thenReturn(TestUtilsGenerator.getListDataStockQueryImp ());
+
     }
 
     @Test
