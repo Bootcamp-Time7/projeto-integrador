@@ -1,5 +1,6 @@
 package com.desafiofinal.praticafinal.utils;
 
+import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.model.*;
 
 import java.time.LocalDate;
@@ -246,4 +247,92 @@ public class TestUtilsGenerator {
                 .buyerName("Marina")
                 .build();
     }
+
+    public static DataBaseQueryImp getDataBaseQueryImp (){
+        return  DataBaseQueryImp.builder()
+                .dueDate(LocalDate.parse("2023-02-02"))
+                .batchId(1L)
+                .idProduct(2L)
+                .category("FF")
+                .currentQuantity(200L)
+                .sectorId(1L)
+                .build();
+    }
+
+    public static List<DataBaseQueryImp> getListDataBaseQuery (){
+        DataBaseQueryImp data = getDataBaseQueryImp();
+        DataBaseQueryImp data1 = getDataBaseQueryImp();
+        data1.setIdProduct(1L);
+
+        DataBaseQueryImp data2 = getDataBaseQueryImp();
+        data2.setIdProduct(2L);
+
+        List<DataBaseQueryImp> listData = new ArrayList<>();
+        listData.add(data);
+        listData.add(data1);
+        listData.add(data2);
+
+        return listData;
+    }
+
+    public static SectorQuery getSectorQuery(){
+        return SectorQuery.builder()
+                .category("FF")
+                .sectorId(1L)
+                .build();
+    }
+
+    public static StockQuery getStockQuery(){
+        return StockQuery.builder()
+                .sectorId(1L)
+                .dueDate(LocalDate.parse("2023-02-02"))
+                .currentQuantity(200)
+                .productId(1L)
+                .batchId(1L)
+                .build();
+    }
+
+    public static List<StockQuery> getListStockQuery (){
+        StockQuery stock = getStockQuery();
+        StockQuery stock1= getStockQuery();
+        stock1.setProductId(1L);
+
+        StockQuery stock2 = getStockQuery();
+        stock2.setProductId(2L);
+
+        List<StockQuery> stocklist = new ArrayList<>();
+        stocklist.add(stock);
+        stocklist.add(stock1);
+        stocklist.add(stock2);
+
+        return stocklist;
+    }
+
+    public static ResponseSectorQuery getResponseSectorQuery() {
+
+        return ResponseSectorQuery.builder()
+                .stockList(getListStockQuery())
+                .productId(1L)
+                .sector(getSectorQuery())
+                .build();
+    }
+
+    public static List<ResponseSectorQuery> getListResponseSectorQuery (){
+        ResponseSectorQuery sectorQuery = getResponseSectorQuery();
+        ResponseSectorQuery sectorQuery1 =getResponseSectorQuery();
+        sectorQuery1.setProductId(1L);
+
+        ResponseSectorQuery sectorQuery2 =getResponseSectorQuery();
+
+
+
+        List<ResponseSectorQuery> responselist = new ArrayList<>();
+        responselist.add(sectorQuery);
+        responselist.add(sectorQuery1);
+        responselist.add(sectorQuery2);
+
+        return responselist;
+    }
+
+
 }
