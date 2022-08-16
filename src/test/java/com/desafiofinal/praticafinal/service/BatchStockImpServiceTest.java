@@ -95,19 +95,19 @@ class BatchStockImpServiceTest {
     void getTotalQuantity() {
     }
 
-    @Test
-    void getListDueDate() {
-        BDDMockito.when(batchStockRepo.getListDueDate(ArgumentMatchers.anyLong()))
-                .thenReturn(TestUtilsGenerator.getDataBaseStockQueryList());
-
-        ResponseStock newResponse = TestUtilsGenerator.getResponseStock();
-        System.out.println("newResponse" + newResponse);
-        Sector newSector = TestUtilsGenerator.getSector();
-        ResponseStock foundResponse = batchStockImpService.getListDueDate(newSector.getSectorId(), 10L);
-        System.out.println("foundResponse" + foundResponse);
-        Assertions.assertThat(foundResponse).isNotNull();
-
-    }
+//    @Test
+//    void getListDueDate() {
+//        BDDMockito.when(batchStockRepo.getListDueDate(ArgumentMatchers.anyLong()))
+//                .thenReturn(TestUtilsGenerator.getDataBaseStockQueryList());
+//
+//        ResponseStock newResponse = TestUtilsGenerator.getResponseStock();
+//        System.out.println("newResponse" + newResponse);
+//        Sector newSector = TestUtilsGenerator.getSector();
+//        ResponseStock foundResponse = batchStockImpService.getListDueDate(newSector.getSectorId(), 10L);
+//        System.out.println("foundResponse" + foundResponse);
+//        Assertions.assertThat(foundResponse).isNotNull();
+//
+//    }
 
     @Test
     void getListCategoryDueDate() {
