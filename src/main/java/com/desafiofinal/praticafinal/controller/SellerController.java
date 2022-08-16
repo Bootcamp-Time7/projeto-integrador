@@ -2,12 +2,14 @@ package com.desafiofinal.praticafinal.controller;
 
 import com.desafiofinal.praticafinal.dto.SellerDTO;
 import com.desafiofinal.praticafinal.model.Seller;
+import com.desafiofinal.praticafinal.service.Exeption;
 import com.desafiofinal.praticafinal.service.ISellerService;
 
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,5 +65,16 @@ public class SellerController {
         Seller sellerById = service.getSellerById(sellerId);
         SellerDTO response = new SellerDTO(sellerById);
         return ResponseEntity.status(HttpStatus.OK).body(response);   
+    }
+    /**
+     * This route delete a seller using the sellerId got through url param.
+     * @param sellerId A long
+     * @return HTML Response 200: ok and a string message of success.
+     * @throws Exception
+     */
+    @DeleteMapping("/delete/{sellerId}")
+    public ResponseEntity<String> deleteSeller(@PathVariable Long sellerId) throws Exception {
+        String message = service.deleteSeller(sellerId);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }

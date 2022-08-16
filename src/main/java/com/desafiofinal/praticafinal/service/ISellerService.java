@@ -14,4 +14,6 @@ public interface ISellerService {
     // Double updateReviewRate(Long sellerId);
 
     Seller getSellerById(Long sellerId);
+
+    String deleteSeller(Long sellerId);
 }

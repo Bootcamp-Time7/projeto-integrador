@@ -70,4 +70,15 @@ public class SellerImplService implements ISellerService {
             throw new Error("Nenhum vendedor com esse id foi encontrado!", e.getCause());
         }
     }
+
+    @Override
+    public String deleteSeller(Long sellerId) {
+        try {
+            Seller sellerById = repo.getReferenceById(sellerId);
+            repo.delete(sellerById);
+            return "Vendedor deletado com sucesso!";
+        } catch (Exception e) {
+            throw new Error("Nenhum vendedor com esse id foi encontrado!", e.getCause());
+        }
+    }
 }
