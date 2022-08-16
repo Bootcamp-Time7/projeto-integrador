@@ -19,7 +19,6 @@ public class Seller {
     private Long id;
     private String sellerName;
     private Double rating;
-    private Long reviewCount;
 
     @OneToMany(mappedBy ="seller")
     @JsonIgnore

@@ -1,12 +1,5 @@
 package com.desafiofinal.praticafinal.controller;
 
-import com.desafiofinal.praticafinal.dto.SellerDTO;
-import com.desafiofinal.praticafinal.dto.queryDto.DatabaseSeller;
-import com.desafiofinal.praticafinal.model.Seller;
-import com.desafiofinal.praticafinal.repository.CartRepo;
-import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
-import com.desafiofinal.praticafinal.service.ISellerService;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.desafiofinal.praticafinal.dto.SellerDTO;
+import com.desafiofinal.praticafinal.model.Seller;
+import com.desafiofinal.praticafinal.service.ISellerService;
+
 /**
  * This class holds all endpoints related to the seller
  * @author Amanda
@@ -31,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class SellerController {
     
     @Autowired
-     CartRepo queryRepo;
 
     private final ISellerService service;
 
@@ -49,7 +45,11 @@ public class SellerController {
         Seller savedSeller = service.saveSeller(newSeller);
         return ResponseEntity.status(HttpStatus.CREATED).body(new SellerDTO(savedSeller));
     }
-
+    /**
+     * This route lists all sellers
+     * @author Nicole
+     * @return HTML Response 200: OK
+     */
     @GetMapping("/list")
     public ResponseEntity<List<SellerDTO>> getAllSellers() {
         List<Seller> sellerList = service.listAllSeller();
@@ -57,9 +57,15 @@ public class SellerController {
         return ResponseEntity.status(HttpStatus.OK).body(convertedResponse); 
     }
 
+    /**
+     * This route updates the seller rate in the database
+     * @param sellerId A long.
+     * @return HTML Response 200: OK
+     */
     @PutMapping("/updaterating/{sellerId}")
-    public ResponseEntity<List<DatabaseSeller>> updateRating(@PathVariable Long sellerId) {
-        List<DatabaseSeller> response = queryRepo.getListRating(sellerId);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<Double> updateRating(@PathVariable Long sellerId) {
+        Double response = service.updateReviewRate(sellerId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }

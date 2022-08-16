@@ -17,20 +17,17 @@ public class SellerDTO {
     private long idSeller;
     private String sellerName;
     private Double rating;
-    private Long reviewCount;
 
     public SellerDTO(Seller seller) {
         this.idSeller = seller.getId();
         this.sellerName = seller.getSellerName();
         this.rating = seller.getRating();
-        this.reviewCount = seller.getReviewCount();
     }
     public static Seller convertToSeller(SellerDTO sellerDTO) {
         return Seller.builder()
                 .id(sellerDTO.getIdSeller())
                 .sellerName(sellerDTO.getSellerName())
                 .rating(sellerDTO.getRating())
-                .reviewCount(sellerDTO.getReviewCount())
                 .build();
     }
 
