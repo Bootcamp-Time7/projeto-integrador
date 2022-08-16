@@ -2,6 +2,8 @@ package com.desafiofinal.praticafinal.controller;
 
 import com.desafiofinal.praticafinal.dto.BatchStockDTO;
 import com.desafiofinal.praticafinal.dto.queryDto.*;
+import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
+import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
 import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.service.BatchStockImpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,11 +86,23 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
+
+    /**
+     *This route transfers all expired batchstocks from all sectors to an specific sector called "Vencidos"
+     * @return status 200: ok
+     * @exception ElementNotFoundException - when there are no expired products
+     */
     @PutMapping("dueDate")
     ResponseEntity<ResponseStock> transferToSector (){
         ResponseStock getResponse = service.transferToSector();
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
+
+    /**
+     *This route gets the finantial loss, in %,  based on expired batchstocks durante an specific month
+     * @return status 200: ok
+     * @exception ElementNotFoundException - when there are no expired products this month
+     */
 
     @GetMapping("/expired/{month}")
     ResponseEntity<String> expiredQuantitySector (@PathVariable String month){
@@ -96,9 +110,15 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
-//    @GetMapping("/finance")
-//    ResponseEntity<String> verifyRegression (){
-//        String getResponse = service.getAnualLoss();
-//        return new ResponseEntity<>(getResponse, HttpStatus.OK);
-//    }
+    /**
+     *This route gets the finantial loss, in %, during the whole year
+     * @return status 200: ok
+     * @exception ElementAlreadyExistsException - when the sector already was created
+     */
+
+    @GetMapping("finance")
+    ResponseEntity<String> verifyRegression (){
+        String getResponse = service.getAnualLoss();
+        return new ResponseEntity<>(getResponse, HttpStatus.OK);
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -210,6 +211,10 @@ public class BatchStockImpService implements IBatchStockService {
         System.out.print(" + ");
         System.out.printf("%.3f", b);
         System.out.print("*X");
+
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.applyPattern("#,##");
+
         return "The anual finantial loss is predicted by the following line equation: Y = " + a + " + " + b + "*x ";
 
     }
@@ -396,7 +401,6 @@ public class BatchStockImpService implements IBatchStockService {
             }
         }
     }
-
 
 }
 

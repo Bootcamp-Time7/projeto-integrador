@@ -43,7 +43,7 @@ public class BatchStockDTO {
     @NotNull(message = "Manufacturing Date cannot be null. Format: yyyy/MM/dd")
     private LocalDate manufacturingTime;
 
-    @Future(message = "Due date must be in the future")
+    //@Future(message = "Due date must be in the future")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     @NotNull(message = "Due date cannot be null")
     private LocalDate dueDate;

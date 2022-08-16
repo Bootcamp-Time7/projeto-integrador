@@ -24,6 +24,12 @@ public class SectorController {
     @Autowired
     private BatchStockImpService serviceb;
 
+
+    /**
+     *This route creates a new sector, called "Vencidos"
+     * @return status 200: ok
+     */
+
     @PostMapping("/insert")
     public ResponseEntity<SectorDTO> insertSector(@RequestBody @Valid SectorDTO sectorDto) {
         Sector newSector = SectorDTO.convertDtoToSector(sectorDto);
