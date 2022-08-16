@@ -75,8 +75,14 @@ public class CartImpService implements ICartService {
     @Override
     public String updateStatusRating(long purchaseId, Double rating){
         Optional<Cart> foundCart = verifyIfCartExists(purchaseId);
-        foundCart.get().setOrderStatus("Finished");
-        foundCart.get().setSellerRating(rating);
+        foundCart.get().setOrderStatus("Finished"); 
+        foundCart.get().setSellerRating(rating); // perguntar como colocar a rating para cada seller e não no carrinho geral, perguntar do endpoint que ta zoado
+        // List<Purchase>  listPurchase = foundCart.get().getListPurchase();
+
+        // for(Purchase p : listPurchase) {
+        //   p.setRating(rating);
+        //   purchaseRepo.save(p);
+        // }
         cartRepo.save(foundCart.get());
         return "Order completed successfully and seller review added";
     }

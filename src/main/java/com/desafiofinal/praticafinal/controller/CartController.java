@@ -1,16 +1,23 @@
 package com.desafiofinal.praticafinal.controller;
 
 import com.desafiofinal.praticafinal.dto.CartDto;
+import com.desafiofinal.praticafinal.dto.queryDto.DatabaseSeller;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.dto.requestResponseDto.BatchStockResponseDTO;
 import com.desafiofinal.praticafinal.model.Cart;
+import com.desafiofinal.praticafinal.repository.CartRepo;
 import com.desafiofinal.praticafinal.service.ICartService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * This class holds all endpoints related to the shopping cart
@@ -22,6 +29,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/fresh-products/purchases")
 public class CartController {
+
+    @Autowired
+    CartRepo cart;
 
     private final ICartService service;
     public CartController(ICartService service) {
@@ -70,5 +80,13 @@ public class CartController {
         String responseCart = service.updateStatusRating(purchaseId, sellerRating);
         return new ResponseEntity<>(responseCart, HttpStatus.CREATED);
     }
+
+   
+    @GetMapping("/retorno") 
+      public List<DatabaseSeller> response() {
+        return cart.getListRating(1l);
+      }
+    
+    
 
 }
