@@ -68,6 +68,7 @@ public class TestUtilsReq6 {
                 .inBoundOrder(inBoundOrder)
                 .build();
     }
+
     public static Product getProductWhitId() {
         Seller seller = getSeller();
         return Product.builder()

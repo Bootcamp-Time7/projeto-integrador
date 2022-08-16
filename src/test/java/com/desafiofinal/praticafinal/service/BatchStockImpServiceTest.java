@@ -1,6 +1,8 @@
 package com.desafiofinal.praticafinal.service;
 
 import com.desafiofinal.praticafinal.dto.queryDto.*;
+import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
+import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.Sector;
 import com.desafiofinal.praticafinal.model.WareHouse;
@@ -45,7 +47,7 @@ class BatchStockImpServiceTest {
 
 
     @Test
-    void transferToSector() {
+    void transferToSector_whenThereAreExpiredProducts() {
         List<BatchStock> batchStockList = TestUtilsReq6.getBatchStockList();
         BDDMockito.when(batchStockRepo.findAll())
                 .thenReturn(batchStockList);
@@ -68,7 +70,25 @@ class BatchStockImpServiceTest {
     }
 
     @Test
-    void getFinantialLoss() {
+    void transferToSector_whenThereAreNoExpiredProducts() {
+        DataBaseExpired dataBaseExpired = TestUtilsReq6.getSectorExpiredWithIdImp();
+        BDDMockito.when(batchStockRepo.getSectorExpired())
+                .thenReturn(dataBaseExpired);
+
+        Optional<WareHouse> wareHouse = Optional.of(TestUtilsReq6.getWareHouse());
+        BDDMockito.when(wareHouseRepo.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(wareHouse);
+
+        Assertions.assertThatThrownBy(()
+                -> batchStockImpService.transferToSector())
+                .isInstanceOf(ElementNotFoundException.class)
+                .hasMessageContaining("There are no expired products");
+
+    }
+
+
+    @Test
+    void getFinantialLoss_whenThereAreProductsExpired() {
         List<DataBaseExpiredQuantity> dataBaseExpiredQuantity = TestUtilsReq6.getDataBaseExpiredQuantityList();
 
         BDDMockito.when(batchStockRepo.getSectorExpiredQuantity(ArgumentMatchers.anyString()))
@@ -78,4 +98,13 @@ class BatchStockImpServiceTest {
 
         Assertions.assertThat(finantialLoss).isEqualTo("O prejuízo do mês 10 foi de 50.0%");
     }
+    @Test
+    void getFinantialLoss_whenThereAreNoProductsExpired() {
+
+        Assertions.assertThatThrownBy(()
+                -> batchStockImpService.getFinantialLoss("10"))
+                .isInstanceOf(ElementNotFoundException.class)
+                .hasMessageContaining("There are no expired products this month");
+    }
+
 }

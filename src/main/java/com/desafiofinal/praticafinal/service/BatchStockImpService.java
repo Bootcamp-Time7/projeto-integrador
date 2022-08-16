@@ -173,18 +173,14 @@ public class BatchStockImpService implements IBatchStockService {
         int n = month.size();
 
         // sum of array x
-
         int sx = month.stream().mapToInt(m->m).sum();
-
-        System.out.println(sx);
 
         // sum of array y
         double sy =0 ;
-        for(double lo : loss){
-            sy =  loss.stream().mapToDouble(l->lo).sum();
-        }
+        //for(double lo : loss){
+            sy =  loss.stream().mapToDouble(l->l).sum();
 
-        System.out.println(sy);
+        System.out.println("sy: "+sy);
         // for sum of product of x and y
         int sxsy = 0;
 
@@ -194,6 +190,7 @@ public class BatchStockImpService implements IBatchStockService {
             sxsy += month.get(i) * loss.get(i);
             sx2 += month.get(i) * month.get(i);
         }
+
         double b = (n * sxsy - sx * sy)
                 / (n * sx2 - sx * sx);
 
@@ -201,21 +198,22 @@ public class BatchStockImpService implements IBatchStockService {
         Double meanX = month.stream().mapToDouble(m->m).sum() / k;
         Double meanY = loss.stream().mapToDouble(l->l).sum()/ k;
 
-        System.out.println(meanX);
-        System.out.println(meanY);
         double a = (meanY - b * meanX);
 
-        System.out.println("Regression line:");
-        System.out.print("Y = ");
-        System.out.printf("%.5f", a);
-        System.out.print(" + ");
-        System.out.printf("%.3f", b);
-        System.out.print("*X");
+//        System.out.println("Regression line:");
+//        System.out.print("Y = ");
+//        System.out.printf("%.5f", a);
+//        System.out.print(" + ");
+//        System.out.printf("%.3f", b);
+//        System.out.print("*X");
 
-        DecimalFormat decimalFormat = new DecimalFormat();
-        decimalFormat.applyPattern("#,##");
+        String pattern = "#.###";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
+        String formata = decimalFormat.format(a);
+        String formatb = decimalFormat.format(b);
 
-        return "The anual finantial loss is predicted by the following line equation: Y = " + a + " + " + b + "*x ";
+
+        return "The anual finantial loss is predicted by the following line equation: Y = " + formatb + "*x " + "+" + formata ;
 
     }
 
