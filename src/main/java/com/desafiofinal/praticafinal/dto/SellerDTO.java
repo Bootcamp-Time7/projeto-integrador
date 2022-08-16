@@ -21,13 +21,13 @@ public class SellerDTO {
     public SellerDTO(Seller seller) {
         this.idSeller = seller.getId();
         this.sellerName = seller.getSellerName();
-        this.rating = seller.getRating();
+        // this.rating = seller.getRating();
     }
     public static Seller convertToSeller(SellerDTO sellerDTO) {
         return Seller.builder()
                 .id(sellerDTO.getIdSeller())
                 .sellerName(sellerDTO.getSellerName())
-                .rating(sellerDTO.getRating())
+                // .rating(sellerDTO.getRating())
                 .build();
     }
 
@@ -41,4 +41,5 @@ public class SellerDTO {
                 .map(SellerDTO::new)
                 .collect(Collectors.toList());
     }
+
 }

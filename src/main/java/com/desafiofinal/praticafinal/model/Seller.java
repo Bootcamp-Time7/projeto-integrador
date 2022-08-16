@@ -18,7 +18,7 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String sellerName;
-    private Double rating;
+    // private Double rating;
 
     @OneToMany(mappedBy ="seller")
     @JsonIgnore

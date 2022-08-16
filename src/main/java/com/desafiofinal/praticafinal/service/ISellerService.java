@@ -10,5 +10,8 @@ public interface ISellerService {
 
     List<Seller> listAllSeller();
 
-    Double updateReviewRate(Long sellerId);
+    // @Deprecated
+    // Double updateReviewRate(Long sellerId);
+
+    Seller getSellerById(Long sellerId);
 }
