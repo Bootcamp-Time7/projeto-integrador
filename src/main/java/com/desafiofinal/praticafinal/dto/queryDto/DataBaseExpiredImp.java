@@ -2,27 +2,29 @@ package com.desafiofinal.praticafinal.dto.queryDto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
 public class DataBaseExpiredImp implements  DataBaseExpired{
-    private Long sectorId;
+    private Long sector_id;
     private Double capacity;
     private String category;
-    private Double maxCapacity;
-    private Long idWarehouse;
+    private Double max_capacity;
+    private Long id_warehouse;
 
     public DataBaseExpiredImp(Long sectorId, Double capacity, String category, Double maxCapacity, Long idWarehouse) {
-        this.sectorId = getSector_id();
+        this.sector_id = getSector_id();
         this.capacity = getCapacity();
         this.category = getCategory();
-        this.maxCapacity =  getMax_capacity();
-        this.idWarehouse = getId_warehouse();
+        this.max_capacity =  getMax_capacity();
+        this.id_warehouse = getId_warehouse();
     }
 
     @Override
     public Long getSector_id() {
-        return this.sectorId;
+        return this.sector_id;
     }
 
     @Override
@@ -37,11 +39,11 @@ public class DataBaseExpiredImp implements  DataBaseExpired{
 
     @Override
     public Double getMax_capacity() {
-        return this.maxCapacity;
+        return this.max_capacity;
     }
 
     @Override
     public Long getId_warehouse() {
-        return this.idWarehouse;
+        return this.id_warehouse;
     }
 }

@@ -1,10 +1,14 @@
 package com.desafiofinal.praticafinal.dto.queryDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+@NoArgsConstructor
+
 public class DataBaseExpiredQuantityImp implements DataBaseExpiredQuantity{
 
     private String month;

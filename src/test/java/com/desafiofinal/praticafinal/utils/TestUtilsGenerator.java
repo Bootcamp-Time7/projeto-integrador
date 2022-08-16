@@ -324,11 +324,11 @@ public class TestUtilsGenerator {
     public static DataBaseExpiredImp getSectorExpiredWithIdImp() {
 
         return DataBaseExpiredImp.builder()
-                .sectorId(13L)
+                .sector_id(13L)
                 .category("Vencidos")
-                .idWarehouse(getWareHouse().getWareHouseId())
+                .id_warehouse(getWareHouse().getWareHouseId())
                 .capacity(200D)
-                .maxCapacity(3000D)
+                .max_capacity(3000D)
                 .build();
     }
 

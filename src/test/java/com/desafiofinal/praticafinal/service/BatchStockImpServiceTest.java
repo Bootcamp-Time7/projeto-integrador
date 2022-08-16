@@ -3,10 +3,12 @@ package com.desafiofinal.praticafinal.service;
 import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.Sector;
+import com.desafiofinal.praticafinal.model.WareHouse;
 import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.repository.ISectorRepo;
 import com.desafiofinal.praticafinal.repository.IWareHouseRepo;
 import com.desafiofinal.praticafinal.utils.TestUtilsGenerator;
+import com.desafiofinal.praticafinal.utils.TestUtilsReq6;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +19,8 @@ import org.mockito.quality.Strictness;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BatchStockImpServiceTest {
 
     @InjectMocks
-    private BatchStockImpService batchStockImpServicee;
-
+    private BatchStockImpService batchStockImpService;
 
     @Mock
     ISectorRepo sectorRepo;
@@ -37,40 +40,42 @@ class BatchStockImpServiceTest {
     @Mock
     IBatchStockRepo batchStockRepo;
 
-
     @Mock
     IWareHouseRepo wareHouseRepo;
 
 
     @Test
     void transferToSector() {
+        List<BatchStock> batchStockList = TestUtilsReq6.getBatchStockList();
         BDDMockito.when(batchStockRepo.findAll())
-                .thenReturn(TestUtilsGenerator.getBatchStockList());
+                .thenReturn(batchStockList);
+
+        DataBaseExpired dataBaseExpired = TestUtilsReq6.getSectorExpiredWithIdImp();
         BDDMockito.when(batchStockRepo.getSectorExpired())
-                .thenReturn(TestUtilsGenerator.getSectorExpiredWithIdImp());
+                .thenReturn(dataBaseExpired);
 
+        Optional<WareHouse> wareHouse = Optional.of(TestUtilsReq6.getWareHouse());
         BDDMockito.when(wareHouseRepo.findById(ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.ofNullable(TestUtilsGenerator.getWareHouse()));
+                .thenReturn(wareHouse);
 
-        ResponseStock foundResponseStock = TestUtilsGenerator.getResponseStock();
+        ResponseStock foundResponseStock = TestUtilsReq6.getResponseStock();
+        ResponseStock updatedSector = batchStockImpService.transferToSector();
 
-        ResponseStock updatedSector = batchStockImpServicee.transferToSector();
-
-        Assertions.assertThat(updatedSector).isNotNull();
+        assertThat(updatedSector).isNotNull();
         assertThat(updatedSector).isEqualTo(foundResponseStock);
-       // assertThat(updatedSector.getCategory()).isEqualTo("Vencidos");
-
+        assertThat(updatedSector.getDataBaseStocks().size()).isEqualTo(3);
+        assertThat(updatedSector.getDataBaseStocks().get(0).getDueDate().isBefore(LocalDate.now())).isTrue();
     }
 
-//    @Test
-//    void getFinantialLoss() {
-//        BDDMockito.when(batchStockRepo.getSectorExpiredQuantity(ArgumentMatchers.anyString()))
-//                .thenReturn((TestUtilsGenerator.getDataExpiredQuantityList()));
-//
-//        //List<DataBaseExpiredQuantityImp> dataBaseExpiredQuantities = TestUtilsGenerator.getDataExpiredQuantityList();
-//
-//        String finantialLoss = batchStockImpServicee.getFinantialLoss("10");
-//        Assertions.assertThat(finantialLoss).isEqualTo("O prejuízo do mês 10 foi de 33.0%");
-//
-//    }
+    @Test
+    void getFinantialLoss() {
+        List<DataBaseExpiredQuantity> dataBaseExpiredQuantity = TestUtilsReq6.getDataBaseExpiredQuantityList();
+
+        BDDMockito.when(batchStockRepo.getSectorExpiredQuantity(ArgumentMatchers.anyString()))
+                .thenReturn(dataBaseExpiredQuantity);
+
+        String finantialLoss = batchStockImpService.getFinantialLoss("10");
+
+        Assertions.assertThat(finantialLoss).isEqualTo("O prejuízo do mês 10 foi de 50.0%");
+    }
 }

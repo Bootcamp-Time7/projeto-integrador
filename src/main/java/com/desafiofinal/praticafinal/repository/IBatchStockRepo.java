@@ -79,7 +79,7 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
             "Select MONTH(due_date) as month, s.sector_id, batch_stock.current_quantity, batch_stock.initial_quantity from batch_stock\n" +
             "join in_bound_order on batch_stock.id_inboundorder = in_bound_order.order_id\n" +
             "join sector as s on s.sector_id = in_bound_order.id_sector\n" +
-            "where in_bound_order.id_sector = 13\n" +
+            "where s.category =\"Vencidos\"\n" +
             "AND month(due_date)=?1\n;", nativeQuery = true)
     List<DataBaseExpiredQuantity> getSectorExpiredQuantity (String month);
 

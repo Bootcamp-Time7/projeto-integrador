@@ -10,20 +10,15 @@ import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.repository.IProductRepo;
 import com.desafiofinal.praticafinal.repository.IWareHouseRepo;
 import com.desafiofinal.praticafinal.repository.InBoundOrderRepo;
-import org.aspectj.weaver.ast.Literal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 @Service
 public class BatchStockImpService implements IBatchStockService {
@@ -32,15 +27,30 @@ public class BatchStockImpService implements IBatchStockService {
 
     private final IProductRepo productRepo;
 
-    private final IBatchStockRepo batchStockRepo;
-
     private final IWareHouseRepo wareHouseRepo;
 
-    public BatchStockImpService(InBoundOrderRepo inBoundOrderRepo, IProductRepo productRepo, IBatchStockRepo batchStockRepo,IWareHouseRepo wareHouseRepo) {
+    private final IBatchStockRepo batchStockRepo;
+    public BatchStockImpService(InBoundOrderRepo inBoundOrderRepo, IProductRepo productRepo, IBatchStockRepo batchStockRepo, IWareHouseRepo wareHouseRepo) {
         this.inBoundOrderRepo = inBoundOrderRepo;
         this.productRepo = productRepo;
         this.batchStockRepo = batchStockRepo;
-        this.wareHouseRepo= wareHouseRepo;
+        this.wareHouseRepo = wareHouseRepo;
+    }
+
+    @Override
+    public List<BatchStock> listBatchStockByCategory (String category) {
+
+        List<InBoundOrder> listInBoundOrder = inBoundOrderRepo.findAll();
+        List<BatchStock> batchListByCategory = new ArrayList<>();
+
+        for (InBoundOrder inBoundOrder: listInBoundOrder){
+            verifyDueDatePerCategory(category, batchListByCategory, inBoundOrder);
+        }
+        if(batchListByCategory.isEmpty()){
+            throw new ElementAlreadyExistsException("No products were found for this category");
+        }else {
+            return batchListByCategory;
+        }
     }
 
     public ResponseStock transferToSector (){
@@ -55,7 +65,7 @@ public class BatchStockImpService implements IBatchStockService {
         if(listStock.isEmpty()){
             throw new ElementNotFoundException("There are no expired products");
         }
-         responseStock.setDataBaseStocks(listStock);
+        responseStock.setDataBaseStocks(listStock);
         return responseStock;
 
     }
@@ -71,12 +81,12 @@ public class BatchStockImpService implements IBatchStockService {
                 batchStockRepo.save(batch);
 
                 ResponseStockQuery vencidos = ResponseStockQuery.builder()
-                                    .productType(batch.getProduct().getProductType())
-                                    .batchId(batch.getBatchId())
-                                    .currentQuantity(batch.getCurrentQuantity())
-                                    .idProduct(batch.getProduct().getId())
-                                    .dueDate(batch.getDueDate())
-                                    .build();
+                        .productType("Vencidos")
+                        .batchId(batch.getBatchId())
+                        .currentQuantity(batch.getCurrentQuantity())
+                        .idProduct(batch.getProduct().getId())
+                        .dueDate(batch.getDueDate())
+                        .build();
                 listStock.add(vencidos);
 
             }
@@ -91,7 +101,7 @@ public class BatchStockImpService implements IBatchStockService {
             System.out.println("warehouse:" + wareHouse);
             Sector updateSector = Sector.builder()
                     .maxCapacity(expiredSector.getMax_capacity())
-                    .category(expiredSector.getCategory())
+                    .category("Vencidos")
                     .wareHouse(wareHouse.get())
                     .sectorId(expiredSector.getSector_id())
                     .capacity(expiredSector.getCapacity())
@@ -204,28 +214,12 @@ public class BatchStockImpService implements IBatchStockService {
 
     }
 
-    @Override
-    public List<BatchStock> listBatchStockByCategory (String category) {
-
-        List<InBoundOrder> listInBoundOrder = inBoundOrderRepo.findAll();
-        List<BatchStock> batchListByCategory = new ArrayList<>();
-
-        for (InBoundOrder inBoundOrder: listInBoundOrder){
-            verifyDueDatePerCategory(category, batchListByCategory, inBoundOrder);
-        }
-        if(batchListByCategory.isEmpty()){
-            throw new ElementAlreadyExistsException("No products were found for this category");
-        }else {
-            return batchListByCategory;
-        }
-    }
-
     public List<ResponseSectorQuery> listBatchSector(long id) {
 
         List<DataBaseQuery> listBatchSector = batchStockRepo.getListBatchSector(id);
 
         if (listBatchSector.isEmpty()) {
-            throw new ElementNotFoundException("Não há lote de produtos com esse id");
+            throw new ElementNotFoundException("There are no batchStock for this id");
         }
 
         return buildResponseQueryList(listBatchSector);
@@ -259,8 +253,6 @@ public class BatchStockImpService implements IBatchStockService {
         }
         return responseSectorQueryList;
     }
-
-
 
     private void verifyDueDatePerCategory(String category, List<BatchStock> batchListByCategory, InBoundOrder inBoundOrder) {
         String foundCategory = inBoundOrder.getSector().getCategory();
@@ -404,8 +396,6 @@ public class BatchStockImpService implements IBatchStockService {
             }
         }
     }
-
-
 
 
 }
