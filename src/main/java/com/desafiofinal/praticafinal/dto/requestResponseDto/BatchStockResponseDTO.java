@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -18,7 +21,7 @@ public class BatchStockResponseDTO {
 
     private Long currentQuantity;
 
-    private LocalDate dueDate;
+    private @Future(message = "Due date must be in the future") @NotNull(message = "Due date cannot be null") LocalDate dueDate;
 
     private ProductResponseDTO productId;
 

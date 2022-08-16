@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -20,7 +21,7 @@ public class BatchStockDTO {
     private long batchNumber;
 
     @NotNull(message = "Please enter a valid product")
-    private ProductResponseDTO product;
+    private Long product;
 
     @NotNull(message = "Current temperature cannot be null")
     private Float currentTemperature;
@@ -52,7 +53,7 @@ public class BatchStockDTO {
 
     public BatchStockDTO(BatchStock batchStock) {
         this.batchNumber = batchStock.getBatchId();
-        this.product = new ProductResponseDTO(batchStock.getProduct());
+        this.product = batchStock.getProduct().getId();
         this.currentTemperature = batchStock.getCurrentTemperature();
         this.minimumTemperature = batchStock.getMinimumTemperature();
         this.initialQuantity = batchStock.getInitialQuantity();
@@ -63,19 +64,19 @@ public class BatchStockDTO {
         this.inBoundOrderId = batchStock.getInBoundOrder().getOrderId();
     }
 
-    public static BatchStock convertBatchStockDtoToBatchStock (BatchStockDTO batchStockDto){
-        return BatchStock.builder()
-                .batchId(batchStockDto.getBatchNumber())
-                .product(ProductResponseDTO.convertToProductResponseDTO(batchStockDto.getProduct()))
-                .currentTemperature(batchStockDto.getCurrentTemperature())
-                .minimumTemperature(batchStockDto.getMinimumTemperature())
-                .initialQuantity(batchStockDto.getInitialQuantity())
-                .currentQuantity(batchStockDto.getCurrentQuantity())
-                .manufacturingDate(batchStockDto.getManufacturingDate())
-                .manufacturingTime(batchStockDto.getManufacturingTime())
-                .dueDate(batchStockDto.getDueDate())
-                .build();
-    }
+//    public static BatchStock convertBatchStockDtoToBatchStock (BatchStockDTO batchStockDto){
+//        return BatchStock.builder()
+//                .batchId(batchStockDto.getBatchNumber())
+//                .product(ProductResponseDTO.convertToProductResponseDTO(batchStockDto.getProduct()))
+//                .currentTemperature(batchStockDto.getCurrentTemperature())
+//                .minimumTemperature(batchStockDto.getMinimumTemperature())
+//                .initialQuantity(batchStockDto.getInitialQuantity())
+//                .currentQuantity(batchStockDto.getCurrentQuantity())
+//                .manufacturingDate(batchStockDto.getManufacturingDate())
+//                .manufacturingTime(batchStockDto.getManufacturingTime())
+//                .dueDate(batchStockDto.getDueDate())
+//                .build();
+//    }
     public static BatchStock convertBatchStockDtoToBatchStockIdOnly (BatchStockDTO batchStockDto){
         return BatchStock.builder()
                 .batchId(batchStockDto.getBatchNumber())
@@ -83,13 +84,13 @@ public class BatchStockDTO {
     }
 
 
-    public static List<BatchStock> convertToListEntity (List<BatchStockDTO> batchStockDtoList){
-        List<BatchStock> batchStockList = new ArrayList<>();
-        for(BatchStockDTO batchStockDto: batchStockDtoList){
-            batchStockList.add(convertBatchStockDtoToBatchStock(batchStockDto));
-        }
-        return batchStockList;
-    }
+//    public static List<BatchStock> convertToListEntity (List<BatchStockDTO> batchStockDtoList){
+//        List<BatchStock> batchStockList = new ArrayList<>();
+//        for(BatchStockDTO batchStockDto: batchStockDtoList){
+//            batchStockList.add(convertBatchStockDtoToBatchStock(batchStockDto));
+//        }
+//        return batchStockList;
+//    }
 
     public static List<BatchStockDTO> convertToListDto (List<BatchStock> batchStockList){
         List<BatchStockDTO> batchStockListDto = new ArrayList<>();

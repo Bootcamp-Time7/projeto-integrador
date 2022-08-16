@@ -15,13 +15,13 @@ public class InBoundOrderDTO {
         this.batchStock = BatchStockDTO.convertToListDto(inBoundOrder.getBatchStockList());
     }
 
-    public static InBoundOrder convertToInBoundOrder(InBoundOrderDTO inBoundOrderDTO){
-        List<BatchStock> newBatchStockList = BatchStockDTO.convertToListEntity(inBoundOrderDTO.getBatchStock());
-
-        return InBoundOrder.builder()
-                .batchStockList(newBatchStockList)
-                .build();
-    }
+//    public static InBoundOrder convertToInBoundOrder(InBoundOrderDTO inBoundOrderDTO){
+//        List<BatchStock> newBatchStockList = BatchStockDTO.convertToListEntity(inBoundOrderDTO.getBatchStock());
+//
+//        return InBoundOrder.builder()
+//                .batchStockList(newBatchStockList)
+//                .build();
+//    }
 
     public static List<InBoundOrderDTO> convertListToDTO(List<InBoundOrder> inBoundOrderList){
         return inBoundOrderList.stream()
@@ -29,11 +29,11 @@ public class InBoundOrderDTO {
                 .collect(Collectors.toList());
     }
 
-    public static List<InBoundOrder> convertListToEntity(List<InBoundOrderDTO> inBoundOrderDTOList) {
-        return inBoundOrderDTOList.stream()
-                .map(InBoundOrderDTO::convertToInBoundOrder)
-                .collect(Collectors.toList());
-    }
+//    public static List<InBoundOrder> convertListToEntity(List<InBoundOrderDTO> inBoundOrderDTOList) {
+//        return inBoundOrderDTOList.stream()
+//                .map(InBoundOrderDTO::convertToInBoundOrder)
+//                .collect(Collectors.toList());
+//    }
 
 
 }
