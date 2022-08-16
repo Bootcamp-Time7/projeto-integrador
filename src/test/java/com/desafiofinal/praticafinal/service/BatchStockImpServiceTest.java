@@ -2,9 +2,12 @@ package com.desafiofinal.praticafinal.service;
 
 import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQueryImp;
 import com.desafiofinal.praticafinal.dto.queryDto.ResponseSectorQuery;
+import com.desafiofinal.praticafinal.dto.queryDto.ResponseStock;
 import com.desafiofinal.praticafinal.dto.queryDto.ResponseStockQuery;
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
 import com.desafiofinal.praticafinal.model.Cart;
+import com.desafiofinal.praticafinal.model.Product;
+import com.desafiofinal.praticafinal.model.Sector;
 import com.desafiofinal.praticafinal.repository.*;
 import com.desafiofinal.praticafinal.utils.TestUtilsGenerator;
 import org.assertj.core.api.Assertions;
@@ -23,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,28 +66,21 @@ class BatchStockImpServiceTest {
         BDDMockito.when(batchStockRepo.getListBatchSector(ArgumentMatchers.anyLong()))
                 .thenReturn(TestUtilsGenerator.getListDataBaseQuery());
 
-
-       // List<DataBaseQueryImp> newList = TestUtilsGenerator.getListDataBaseQuery ();
-        List<ResponseSectorQuery> newList = TestUtilsGenerator.getListResponseSectorQuery ();
         DataBaseQueryImp newBatch = TestUtilsGenerator.getDataBaseQueryImp();
-        List<ResponseSectorQuery> foundList = batchStockImpService.listBatchSector(newBatch.getIdProduct());
+        List<ResponseSectorQuery> newList = TestUtilsGenerator.getListResponseSectorQuery (newBatch.getId_product());
+        List<ResponseSectorQuery> foundList = batchStockImpService.listBatchSector(newBatch.getId_product());
 
         assertThat(foundList).isNotNull();
         assertThat(foundList).isEqualTo(newList);
-
+        assertThat(foundList.size()).isEqualTo(1);
     }
 
     @Test
     void listBatchSector_whenListDoesNotExist() {
-        BDDMockito.when(batchStockRepo.getListBatchSector(ArgumentMatchers.anyLong()))
-                .thenReturn(TestUtilsGenerator.getListDataBaseQuery());
-
-        List<DataBaseQueryImp> newListDataBase = TestUtilsGenerator.getListDataBaseQuery ();
-        DataBaseQueryImp newBatch = TestUtilsGenerator.getDataBaseQueryImp();
+        DataBaseQueryImp newBatch = TestUtilsGenerator.getDataBaseQueryImpWithOutBatch();
 
         assertThatThrownBy(() -> {
-            batchStockRepo.getListBatchSector(newBatch.getId_product());
-
+            batchStockImpService.listBatchSector(newBatch.getId_product());
         }).isInstanceOf(ElementNotFoundException.class)
                 .hasMessageContaining("There are no batchStock for this id");
 
@@ -101,7 +98,14 @@ class BatchStockImpServiceTest {
     @Test
     void getListDueDate() {
         BDDMockito.when(batchStockRepo.getListDueDate(ArgumentMatchers.anyLong()))
-                .thenReturn(TestUtilsGenerator.getListDataStockQueryImp ());
+                .thenReturn(TestUtilsGenerator.getDataBaseStockQueryList());
+
+        ResponseStock newResponse = TestUtilsGenerator.getResponseStock();
+        System.out.println("newResponse" + newResponse);
+        Sector newSector = TestUtilsGenerator.getSector();
+        ResponseStock foundResponse = batchStockImpService.getListDueDate(newSector.getSectorId(), 10L);
+        System.out.println("foundResponse" + foundResponse);
+        Assertions.assertThat(foundResponse).isNotNull();
 
     }
 

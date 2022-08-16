@@ -2,11 +2,13 @@ package com.desafiofinal.praticafinal.dto.queryDto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Builder
 @Data
+@NoArgsConstructor
 public class DataBaseStockQueryImp implements DataBaseStockQuery{
 
     private Long batchId;
