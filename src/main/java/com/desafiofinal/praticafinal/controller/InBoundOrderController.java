@@ -34,7 +34,7 @@ public class InBoundOrderController {
     public ResponseEntity<Object> create(@RequestBody InboundOrderRequestDTO newOrder) throws Exception {
         InBoundOrder response = service.saveInBoundOrder(newOrder);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new InBoundOrderResponseDTO(response));
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
     
@@ -48,7 +48,7 @@ public class InBoundOrderController {
     public ResponseEntity<Object> updateInBoundOrder(@RequestBody InboundOrderRequestDTO updateOrder) throws Exception {
         InBoundOrder updatedResponse = service.updateInBoundOrder(updateOrder);
 
-        return new ResponseEntity<>(new InBoundOrderResponseDTO(updatedResponse), HttpStatus.CREATED);
+        return new ResponseEntity<>(updatedResponse, HttpStatus.CREATED);
 
     }
 }
