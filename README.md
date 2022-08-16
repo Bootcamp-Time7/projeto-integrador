@@ -2,6 +2,13 @@
 
 Nesse requisito optei por implementar a avaliação de prejuízo causado pela quantidade de produtos vencidos parados em estoque.
 
+[Requisito 6](https://docs.google.com/document/d/1FWNm0zGHImoh-YvxqscE2r6UQKhIih1e/edit?usp=sharing&ouid=104577740136334641024&rtpof=true&sd=true) 
+
+[Collection-Postman](https://www.getpostman.com/collections/3e29628f42dc6dc8d81c)
+
+``` 
+
+```
 ### <center> 💡 Features 💡</center>
 - Novo setor "Vencidos": Adionado setor específico para armazenar todos os produtos vencidos parados em estoque
 - Transferir de setor: Transferidos todos os produtos vencidos de seus respectivos setores originais para o "Vencidos"
