@@ -96,7 +96,7 @@ public class BatchStockController {
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/finance")
     ResponseEntity<String> verifyRegression (){
         String getResponse = service.getAnualLoss();
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
