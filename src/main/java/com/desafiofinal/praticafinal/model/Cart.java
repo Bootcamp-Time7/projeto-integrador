@@ -29,6 +29,8 @@ public class Cart {
 
     private String orderStatus;
 
+    private double sellerRating;
+
     @OneToMany (mappedBy = "idCart")
     private List<Purchase> listPurchase;
 }

@@ -72,6 +72,15 @@ public class CartImpService implements ICartService {
         return "Order completed successfully";
     }
 
+    @Override
+    public String updateStatusRating(long purchaseId, Double rating){
+        Optional<Cart> foundCart = verifyIfCartExists(purchaseId);
+        foundCart.get().setOrderStatus("Finished");
+        foundCart.get().setSellerRating(rating);
+        cartRepo.save(foundCart.get());
+        return "Order completed successfully and seller review added";
+    }
+
     private double getTotalPrice(Cart cart) {
         double totalPrice = 0d;
         for (Purchase purchase : cart.getListPurchase()) {

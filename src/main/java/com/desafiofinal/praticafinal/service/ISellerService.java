@@ -9,4 +9,6 @@ public interface ISellerService {
     Seller saveSeller(Seller seller);
 
     List<Seller> listAllSeller();
+
+    Double updateReviewRate(Long sellerId);
 }

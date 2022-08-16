@@ -1,16 +1,32 @@
 package com.desafiofinal.praticafinal.service;
 
+import com.desafiofinal.praticafinal.dto.queryDto.DatabaseSeller;
+import com.desafiofinal.praticafinal.model.BatchStock;
+import com.desafiofinal.praticafinal.model.Cart;
+import com.desafiofinal.praticafinal.model.Purchase;
 import com.desafiofinal.praticafinal.model.Seller;
+import com.desafiofinal.praticafinal.repository.CartRepo;
+import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
 import com.desafiofinal.praticafinal.repository.ISellerRepo;
 import lombok.val;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class SellerImplService implements ISellerService{
+
+    @Autowired
+     CartRepo cartRepo;
+
+     @Autowired
+     ISellerRepo sellerRepo;
+
     private final ISellerRepo repo;
 
     public SellerImplService(ISellerRepo repo) {
@@ -32,5 +48,22 @@ public class SellerImplService implements ISellerService{
     public List<Seller> listAllSeller() {
         List<Seller> allSellers = repo.findAll();
         return allSellers;
+    }
+
+    @Override
+    public Double updateReviewRate(Long sellerId) {
+     Optional<Seller> responseSeller = sellerRepo.findById(sellerId);
+        List<DatabaseSeller> dataList = cartRepo.getListRating(sellerId);
+
+      Double total = 0.0;
+      Integer size = dataList.size();
+      
+      for(DatabaseSeller dataSeller : dataList ) {
+        total += dataSeller.getSeller_rating();
+      }
+
+      Double averageRating = total / size;
+      responseSeller.get().setRating(averageRating);
+      return averageRating;
     }
 }

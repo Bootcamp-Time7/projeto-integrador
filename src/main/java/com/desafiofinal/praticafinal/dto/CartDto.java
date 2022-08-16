@@ -37,10 +37,13 @@ public class CartDto {
     @NotEmpty(message = "Purchase list cannot be empty")
     private List<@Valid PurchaseDTO> purchaseList;
 
+    private double sellerRating;
+
     public CartDto(Cart cart){
         this.cartId=cart.getCartId();
         this.buyer = new BuyerDto(cart.getBuyer());
         this.totalPrice=cart.getTotalPrice();
+        this.sellerRating = cart.getSellerRating();
     }
 
     public static Cart convertDtoToCart (CartDto cartDto){
@@ -53,6 +56,7 @@ public class CartDto {
                 .date(cartDto.getDate())
                 .orderStatus(cartDto.getOrderStatus())
                 .listPurchase(newPurchase)
+                .sellerRating(cartDto.sellerRating)
                 .build();
     }
 }

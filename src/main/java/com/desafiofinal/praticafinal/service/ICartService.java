@@ -11,4 +11,6 @@ public interface ICartService {
     List<BatchStock> getProducts(long purchaseId);
 
     String updateStatus(long purchaseId);
+
+    public String updateStatusRating(long purchaseId, Double rating);
 }

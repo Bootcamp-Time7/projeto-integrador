@@ -4,6 +4,7 @@ import com.desafiofinal.praticafinal.dto.queryDto.BatchStockSectorQuantityDTO;
 import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQuery;
 import com.desafiofinal.praticafinal.dto.queryDto.DataBaseStockQuery;
 import com.desafiofinal.praticafinal.dto.queryDto.DataBaseTotalQuantityQuery;
+import com.desafiofinal.praticafinal.dto.queryDto.DatabaseSeller;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -67,4 +68,5 @@ public interface IBatchStockRepo extends JpaRepository<BatchStock, Long> {
             "where s.category = ?1\n" +
             "order by batch.due_date;", nativeQuery = true)
     List<DataBaseStockQuery> getListCategory(String category);
+
 }
