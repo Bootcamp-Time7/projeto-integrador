@@ -1,5 +1,6 @@
 package com.desafiofinal.praticafinal.service;
 
+import com.desafiofinal.praticafinal.dto.ProductDTO;
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
 import com.desafiofinal.praticafinal.model.Product;
 import com.desafiofinal.praticafinal.model.Seller;
@@ -22,21 +23,29 @@ public class ProductImplService implements IProductService{
     }
 
     @Override
-    public Product saveProduct(Product newProduct) {
-        Seller foundSeller = verifySeller(newProduct);
-        newProduct.setSeller(foundSeller);
-        return repo.save(newProduct);
-    }
+    public Product saveProduct(ProductDTO product) {
 
-    private Seller verifySeller(Product product) {
-        return sellerRepo
-                .findById(product.getSeller().getId())
+        var seller = sellerRepo
+                .findById(product.getSeller().getIdSeller())
                 .orElseThrow(() -> new ElementNotFoundException("Seller does not exist"));
+
+        return repo.save(buildProduct(product, seller));
     }
 
     @Override
     public List<Product> listAllProducts (){
         return repo.findAll();
+    }
+
+    private Product buildProduct(ProductDTO productDTO, Seller seller){
+        return Product.builder()
+                .productType(productDTO.getProductType())
+                .productName(productDTO.getProductName())
+                .validateDate(productDTO.getValidateDate())
+                .price(productDTO.getPrice())
+                .bulk(productDTO.getBulk())
+                .seller(seller)
+                .build();
     }
 
 }
