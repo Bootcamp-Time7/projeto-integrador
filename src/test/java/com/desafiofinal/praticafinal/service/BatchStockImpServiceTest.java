@@ -18,7 +18,9 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -73,6 +75,20 @@ class BatchStockImpServiceTest {
     }
 
     @Test
+    void listBatchSector_whenListExists() {
+        BDDMockito.when(batchStockRepo.getListBatchSector(ArgumentMatchers.anyLong()))
+                .thenReturn(TestUtilsGenerator.getListDataBaseQuery());
+
+        DataBaseQueryImp newBatch = TestUtilsGenerator.getDataBaseQueryImp();
+        List<ResponseSectorQuery> newList = TestUtilsGenerator.getListResponseSectorQuery (newBatch.getId_product());
+        List<ResponseSectorQuery> foundList = batchStockImpService.listBatchSector(newBatch.getId_product());
+
+        assertThat(foundList).isNotNull();
+        assertThat(foundList).isEqualTo(newList);
+        assertThat(foundList.size()).isEqualTo(1);
+    }
+
+    @Test
     void listBatchSector_whenListDoesNotExist() {
         DataBaseQueryImp newBatch = TestUtilsGenerator.getDataBaseQueryImpWithOutBatch();
 
@@ -85,6 +101,7 @@ class BatchStockImpServiceTest {
 
     @Test
     void listBatchSectorOrdered() {
+
 
     }
 

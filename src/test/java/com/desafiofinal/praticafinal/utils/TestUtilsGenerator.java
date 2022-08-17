@@ -297,23 +297,23 @@ public class TestUtilsGenerator {
 
     public static DataBaseQueryImp getDataBaseQueryImp (){
         DataBaseQueryImp dataBaseQueryImp = new DataBaseQueryImp();
-        dataBaseQueryImp.setIdProduct(1L);
-        dataBaseQueryImp.setBatchId(1L);
-        dataBaseQueryImp.setSectorId(1L);
-        dataBaseQueryImp.setDueDate(LocalDate.parse("2023-02-02"));
+        dataBaseQueryImp.setId_product(1L);
+        dataBaseQueryImp.setBatch_id(1L);
+        dataBaseQueryImp.setSector_id(1L);
+        dataBaseQueryImp.setDue_date(LocalDate.parse("2023-02-02"));
         dataBaseQueryImp.setCategory("FF");
-        dataBaseQueryImp.setCurrentQuantity(200L);
+        dataBaseQueryImp.setCurrent_quantity(200L);
         return  dataBaseQueryImp;
 
     }
 
     public static DataBaseQueryImp getDataBaseQueryImpWithOutBatch (){
         DataBaseQueryImp dataBaseQueryImp = new DataBaseQueryImp();
-        dataBaseQueryImp.setIdProduct(1L);
-        dataBaseQueryImp.setSectorId(1L);
-        dataBaseQueryImp.setDueDate(LocalDate.parse("2023-02-02"));
+        dataBaseQueryImp.setId_product(1L);
+        dataBaseQueryImp.setSector_id(1L);
+        dataBaseQueryImp.setDue_date(LocalDate.parse("2023-02-02"));
         dataBaseQueryImp.setCategory("FF");
-        dataBaseQueryImp.setCurrentQuantity(200L);
+        dataBaseQueryImp.setCurrent_quantity(200L);
         return  dataBaseQueryImp;
 
     }
@@ -382,7 +382,7 @@ public class TestUtilsGenerator {
         ResponseSectorQuery sectorQuery2 =getResponseSectorQuery();
 
         List<ResponseSectorQuery> responselist = new ArrayList<>();
-        // responselist.add(sectorQuery);
+       // responselist.add(sectorQuery);
         responselist.add(sectorQuery1);
         //responselist.add(sectorQuery2);
 

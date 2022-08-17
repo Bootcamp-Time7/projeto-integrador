@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Builder
 @Data
 @NoArgsConstructor
-public class DataBaseStockQueryImp implements DataBaseStockQuery {
+public class DataBaseStockQueryImp implements DataBaseStockQuery{
 
     private Long batchId;
     private Long productId;
