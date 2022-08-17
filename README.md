@@ -28,10 +28,10 @@ Nesse requisito optei por implementar a avaliação de prejuízo causado pela qu
 
 |  HTTP  | URL MODEL                                | DESCRIPTION                                                                     |    US-CODE     |
 |:------:|:-----------------------------------------|:--------------------------------------------------------------------------------|:--------------:|
-| `POST` | /api/v1/fresh-products/sector/insert     | Registra setor "Vencidos"        | ml-e-wallet-06 |
-| `PUT`  | /fresh-products/sectorProducts/dueDate   | Transfere todos os produtos vencidos para o setor criado          | ml-e-wallet-06 |
-| `GET`  | /api/v1/fresh-products/sectorProducts/expired/{month}    | Retorna o prejuízo do mês        | ml-e-wallet-06 |
-| `GET`  | /api/v1/fresh-products/sectorProducts/finance | Retorna a predição do prejuízo anual                                            | ml-e-wallet-06 |
+| `POST` | /api/v1/fresh-products/sector/insert     | Registra setor "Vencidos"        | ml-vencidos-06 |
+| `PUT`  | /fresh-products/sectorProducts/dueDate   | Transfere todos os produtos vencidos para o setor criado          | ml-vencidos-06 |
+| `GET`  | /api/v1/fresh-products/sectorProducts/expired/{month}    | Retorna o prejuízo do mês        | ml-vencidos-06 |
+| `GET`  | /api/v1/fresh-products/sectorProducts/finance | Retorna a predição do prejuízo anual                                            | ml-vencidos-06 |
 
 
 
