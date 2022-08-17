@@ -1,13 +1,16 @@
 package com.desafiofinal.praticafinal.dto.queryDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Basic;
 import java.time.LocalDate;
 
 @Builder
 @Data
+@NoArgsConstructor
 public class DataBaseQueryImp implements DataBaseQuery{
 
     private Long sectorId;
@@ -23,7 +26,7 @@ public class DataBaseQueryImp implements DataBaseQuery{
         this.batchId = getBatch_id();
         this.currentQuantity = getCurrent_quantity();
         this.dueDate = getDue_date();
-        this.category = getCategory();
+        this.category = category;
     }
 
     @Override
