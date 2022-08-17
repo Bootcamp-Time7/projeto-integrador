@@ -46,4 +46,4 @@ Nesse requisito optei por implementar a avaliação de prejuízo causado pela qu
 #### <center> Equação da reta obtida a partir dos valores de prejuízo durante os meses de 2021: #### 
 
 
-##<center> ![alt text](https://cdn.discordapp.com/attachments/994271189616840765/1009213604693815356/Captura_de_Tela_2022-08-16_as_18.33.48.png) <center>
+##<center> ![alt text](https://cdn.discordapp.com/attachments/994271189616840765/1009423976998641744/WhatsApp_Image_2022-08-17_at_08.13.35.jpeg) <center>
