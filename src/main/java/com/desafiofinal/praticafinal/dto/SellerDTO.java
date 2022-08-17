@@ -18,6 +18,7 @@ public class SellerDTO {
         this.idSeller = seller.getId();
         this.sellerName = seller.getSellerName();
     }
+
     public static Seller convertToSeller(SellerDTO sellerDTO) {
         return Seller.builder()
                 .id(sellerDTO.getIdSeller())
@@ -25,3 +26,4 @@ public class SellerDTO {
                 .build();
     }
 }
+

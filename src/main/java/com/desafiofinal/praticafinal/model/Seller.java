@@ -25,4 +25,5 @@ public class Seller {
     public Seller(String sellerName) {
         this.sellerName = sellerName;
     }
+
 }

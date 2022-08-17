@@ -76,6 +76,7 @@ public class BatchStockDTO {
                 .dueDate(batchStockDto.getDueDate())
                 .build();
     }
+
     public static BatchStock convertBatchStockDtoToBatchStockIdOnly (BatchStockDTO batchStockDto){
         return BatchStock.builder()
                 .batchId(batchStockDto.getBatchNumber())

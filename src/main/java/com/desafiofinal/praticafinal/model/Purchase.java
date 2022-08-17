@@ -29,5 +29,7 @@ public class Purchase {
 
     private int productQuantity;
 
+    private double totalPurchase;
+
 
 }

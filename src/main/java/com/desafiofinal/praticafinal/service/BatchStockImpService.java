@@ -51,7 +51,7 @@ public class BatchStockImpService implements IBatchStockService {
         List<DataBaseQuery> listBatchSector = batchStockRepo.getListBatchSector(id);
 
         if (listBatchSector.isEmpty()) {
-            throw new ElementNotFoundException("Não há lote de produtos com esse id");
+            throw new ElementNotFoundException("Não há lote de produtos com esse id"); //TODO
         }
 
         return buildResponseQueryList(listBatchSector);
@@ -175,7 +175,7 @@ public class BatchStockImpService implements IBatchStockService {
 
     public ResponseStock getListDueDate (Long sectorId, Long days) {
 
-        List<DataBaseStockQuery> listDueDate = batchStockRepo.getListDueDate(sectorId);
+        List<DataBaseStockQuery> listDueDate = batchStockRepo.getListDueDate(sectorId); //TODO
         List<ResponseStockQuery> listResponse = new ArrayList<>();
 
         if(listDueDate.isEmpty()){

@@ -29,6 +29,8 @@ public class PurchaseDTO {
     @NotNull(message = "Product quantity cannot be null")
     private Integer productQuantity;
 
+    private Double totalPurchase; //TODO
+
     public PurchaseDTO(Purchase purchase){
         this.purchaseId = purchase.getPurchaseId();
         this.pricePerProduct= purchase.getPricePerProduct();
