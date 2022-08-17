@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProductDTO {
 
-    private Long id;
+//    private Long id;
 
     private String productType;
 
@@ -24,7 +24,7 @@ public class ProductDTO {
 
     private double price;
 
-    private String productId;
+//    private String productId;
 
     private String productName;
 
@@ -36,7 +36,7 @@ public class ProductDTO {
 //    private List<BatchStock> batchList;
 
     public ProductDTO(Product product){
-        this.id = product.getId();
+//        this.id = product.getId();
         this.productType = product.getProductType();
         this.validateDate = product.getValidateDate();
         this.price = product.getPrice();
@@ -47,16 +47,16 @@ public class ProductDTO {
 
     }
 
-    public static Product convertDtoToProduct (ProductDTO productDto){
-        return Product.builder()
-                .id(productDto.getId())
-                .productType(productDto.getProductType())
-                .validateDate(productDto.getValidateDate())
-                .price(productDto.getPrice())
-                .productName(productDto.getProductName())
-                .seller(SellerDTO.convertToSeller(productDto.getSeller()))
-                .build();
-    }
+//    public static Product convertDtoToProduct (ProductDTO productDto){
+//        return Product.builder()
+//                .id(productDto.getId())
+//                .productType(productDto.getProductType())
+//                .validateDate(productDto.getValidateDate())
+//                .price(productDto.getPrice())
+//                .productName(productDto.getProductName())
+//                .seller(SellerDTO.convertToSeller(productDto.getSeller()))
+//                .build();
+//    }
 
 
     public static List<ProductDTO> convertToDTO(List<Product> productDTOList){
