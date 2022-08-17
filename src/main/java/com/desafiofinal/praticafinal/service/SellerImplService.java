@@ -1,5 +1,6 @@
 package com.desafiofinal.praticafinal.service;
 
+import com.desafiofinal.praticafinal.dto.SellerDTO;
 import com.desafiofinal.praticafinal.model.Seller;
 import com.desafiofinal.praticafinal.repository.ISellerRepo;
 import lombok.val;
@@ -15,13 +16,8 @@ public class SellerImplService implements ISellerService{
     }
 
     @Override
-    public Seller saveSeller(Seller seller) {
-        try{
-            val sellerSaved = repo.save(seller);
-            return sellerSaved;
-        }
-       catch (Exception e){
-            throw new Error("Desculpe, não foi possível realizar a sua solicitação", e.getCause());
-       }
+    public Seller saveSeller(SellerDTO seller) {
+
+            return repo.save(new Seller(seller));
     }
 }
