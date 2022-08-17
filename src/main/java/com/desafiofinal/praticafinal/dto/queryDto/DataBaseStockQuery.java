@@ -8,6 +8,5 @@ public interface DataBaseStockQuery {
     String getProduct_type();
     LocalDate getDue_date();
     Long getCurrent_quantity();
-
-
+    Long getSector_id();
 }
