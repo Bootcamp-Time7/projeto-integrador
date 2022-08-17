@@ -36,10 +36,13 @@ public class ProductController {
      * @return HTML Response 201: Created
      */
     @PostMapping
-    public ResponseEntity<ProductDTO> insertProduct(@RequestBody ProductDTO productDTO){
-        Product newProduct = ProductDTO.convertDtoToProduct(productDTO);
-        Product response = service.saveProduct(newProduct);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ProductDTO(response));
+    public ResponseEntity<Object> insertProduct(@RequestBody ProductDTO productDTO){
+        try{
+            Product response = service.saveProduct(productDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     /**
