@@ -1,8 +1,7 @@
 package com.desafiofinal.praticafinal.controller;
 
-import com.desafiofinal.praticafinal.dto.queryDto.*;
-import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
-import com.desafiofinal.praticafinal.service.BatchStockImpService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.desafiofinal.praticafinal.dto.queryDto.ResponseSectorQuery;
+import com.desafiofinal.praticafinal.dto.queryDto.ResponseSectorTotalQuantity;
+import com.desafiofinal.praticafinal.dto.queryDto.ResponseStock;
+import com.desafiofinal.praticafinal.repository.IBatchStockRepo;
+import com.desafiofinal.praticafinal.service.BatchStockImpService;
 
 /**
  * This class holds all endpoints related to fillter and display products

@@ -2,7 +2,6 @@ package com.desafiofinal.praticafinal.controller;
 
 import com.desafiofinal.praticafinal.dto.SellerDTO;
 import com.desafiofinal.praticafinal.model.Seller;
-import com.desafiofinal.praticafinal.service.Exeption;
 import com.desafiofinal.praticafinal.service.ISellerService;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public class SellerController {
         return new ResponseEntity<List<SellerDTO>>(response, HttpStatus.FOUND);
     }
     /**
-     * This route list a seller using the sellerId got through url param.
+     * This route list a seller using the sellerId got through url param. /REQ 6
      * @param sellerId A long
      * @return HTML Response 200: ok
      * @throws Exception 
@@ -67,7 +66,7 @@ public class SellerController {
         return ResponseEntity.status(HttpStatus.OK).body(response);   
     }
     /**
-     * This route delete a seller using the sellerId got through url param.
+     * This route delete a seller using the sellerId got through url param. /REQ 6
      * @param sellerId A long
      * @return HTML Response 200: ok and a string message of success.
      * @throws Exception
