@@ -32,12 +32,6 @@ public class ProductImplService implements IProductService{
         return repo.save(buildProduct(product, seller));
     }
 
-    private Seller verifySeller(Product product) {
-        return sellerRepo
-                .findById(product.getSeller().getId())
-                .orElseThrow(() -> new ElementNotFoundException("Seller does not exist"));
-    }
-
     @Override
     public List<Product> listAllProducts (){
         return repo.findAll();
