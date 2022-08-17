@@ -15,7 +15,7 @@ Nesse requisito optei por implementar a avaliação de prejuízo causado pela qu
 - Prejuízo mensal: Dado determinado mês, calculado o prejuízo causado pelos produtos vencidos parados em estoque, em relação ao total de produtos, em porcentagem
 - Prejuízo anual: Predição de prejuízo anual baseada em regressão linear como aproximação de todos os prejuízos mensais durante o ano.
 
-###<center> Model <center>
+###<center> Model </center>
 #### <center> O modelo abaixo é baseado na aplicação por completo. Não foi adicionada uma nova entidade para oo presente requisito <center>
 ![alt text](https://cdn.discordapp.com/attachments/994271189616840765/1009214070374797312/modelDesafio3.png)
 
@@ -39,9 +39,11 @@ Nesse requisito optei por implementar a avaliação de prejuízo causado pela qu
 <center> - 66% of classes </center>
 
 ### <center> Regressão linear </center>
-###Linha de regressão a ser obtida: y=a*x + b
+Linha de regressão a ser obtida: y=a*x + b
 
-###onde :<center> ![alt text](https://cdn.discordapp.com/attachments/994271189616840765/1009217106258182154/Captura_de_Tela_2022-08-16_as_18.43.21.png) <center>
+onde 
+
+###<center> ![alt text](https://cdn.discordapp.com/attachments/994271189616840765/1009217106258182154/Captura_de_Tela_2022-08-16_as_18.43.21.png) <center>
 
 #### <center> Equação da reta obtida a partir dos valores de prejuízo durante os meses de 2021: #### 
 
