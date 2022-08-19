@@ -107,4 +107,10 @@ class BatchStockImpServiceTest {
                 .hasMessageContaining("There are no expired products this month");
     }
 
+    @Test
+    void getAnualLoss_whenThereAreProductsExpired() {
+       String anualLoss = batchStockImpService.getAnualLoss();
+       Assertions.assertThat(anualLoss).isEqualTo("The anual finantial loss is predicted by the following line equation: Y = 0*x +0") ;
+    }
+
 }
