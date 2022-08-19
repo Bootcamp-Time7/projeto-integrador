@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.desafiofinal.praticafinal.model.BatchStock;
 import com.desafiofinal.praticafinal.model.InBoundOrder;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,31 +100,31 @@ public class BatchStockImpService implements IBatchStockService {
         }
     }
 
-    private List<ResponseSectorQuery> buildResponseQueryList(List<DataBaseQuery> listBatchSector) {
+    private List<ResponseSectorQuery> buildResponseQueryList(List<DataBaseQuery> dataBaseQuery) {
         List<ResponseSectorQuery> responseSectorQueryList = new ArrayList<>();
         List<SectorQuery> sectorQueryList = new ArrayList<>();
         List<StockQuery> stockQueryList = new ArrayList<>();
 
-        buildInitialList(listBatchSector, sectorQueryList, stockQueryList);
+        buildInitialList(dataBaseQuery, sectorQueryList, stockQueryList);
         filterBySector(responseSectorQueryList, sectorQueryList, stockQueryList);
 
         return responseSectorQueryList;
     }
 
-    private void buildInitialList(List<DataBaseQuery> listBatchSector, List<SectorQuery> sectorQueryList, List<StockQuery> stockQueryList) {
-        for (DataBaseQuery batchStockSectorDTO : listBatchSector) {
+    private void buildInitialList(List<DataBaseQuery> dataBaseQuery, List<SectorQuery> sectorQueryList, List<StockQuery> stockQueryList) {
+        for (DataBaseQuery data : dataBaseQuery) {
             StockQuery stockQuery = StockQuery.builder()
-                    .batchId(batchStockSectorDTO.getBatch_id())
-                    .currentQuantity(batchStockSectorDTO.getCurrent_quantity())
-                    .dueDate(batchStockSectorDTO.getDue_date())
-                    .sectorId(batchStockSectorDTO.getSector_id())
-                    .productId(batchStockSectorDTO.getId_product())
+                    .batchId(data.getBatch_id())
+                    .currentQuantity(data.getCurrent_quantity())
+                    .dueDate(data.getDue_date())
+                    .sectorId(data.getSector_id())
+                    .productId(data.getId_product())
                     .build();
             stockQueryList.add(stockQuery);
 
             SectorQuery sectorQuery = new SectorQuery();
-            sectorQuery.setCategory(batchStockSectorDTO.getCategory());
-            sectorQuery.setSectorId(batchStockSectorDTO.getSector_id());
+            sectorQuery.setCategory(data.getCategory());
+            sectorQuery.setSectorId(data.getSector_id());
 
             if (!sectorQueryList.contains(sectorQuery)) {
                 sectorQueryList.add(sectorQuery);

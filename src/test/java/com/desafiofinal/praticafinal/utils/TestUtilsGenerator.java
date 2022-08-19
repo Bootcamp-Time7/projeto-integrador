@@ -348,6 +348,8 @@ public class TestUtilsGenerator {
                 .build();
     }
 
+
+
     public static List<StockQuery> getListStockQuery (){
         StockQuery stock = getStockQuery();
         StockQuery stock1= getStockQuery();
@@ -449,6 +451,44 @@ public class TestUtilsGenerator {
         return ResponseStock.builder()
                 .dataBaseStocks(getListResponseStockQuery())
                 .build();
+    }
+
+    public static StockQuery getStockQuery2(){
+        DataBaseQueryImp dataQuery = new DataBaseQueryImp();
+        return StockQuery.builder()
+                .sectorId(1L)
+                .dueDate(LocalDate.parse("2023-02-02"))
+                .currentQuantity(200)
+                .productId(1L)
+                .batchId(dataQuery.getBatch_id())
+                .build();
+    }
+
+    public static DataBaseQueryImp dataBaseQueryImpWithId (Long id){
+        return  DataBaseQueryImp.builder()
+                .category("FF")
+                .batch_id(43L)
+                .due_date(LocalDate.parse("2022-08-26"))
+                .current_quantity(300L)
+                .id_product(id)
+                .sector_id(1L)
+                .build();
+
+    }
+
+    public static List<DataBaseQuery> dataBaseQueries (){
+        DataBaseQuery data0 = dataBaseQueryImpWithId(1L);
+        DataBaseQuery data1 = dataBaseQueryImpWithId(2L);
+        //DataBaseQuery data2 = dataBaseQueryImpWithId(3L);
+
+
+        List<DataBaseQuery> list = new ArrayList<>();
+
+        list.add(data0);
+        list.add(data1);
+      //  list.add(data2);
+
+        return list;
     }
 }
 

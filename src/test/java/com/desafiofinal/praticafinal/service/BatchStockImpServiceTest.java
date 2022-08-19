@@ -1,5 +1,6 @@
 package com.desafiofinal.praticafinal.service;
 
+import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQuery;
 import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQueryImp;
 import com.desafiofinal.praticafinal.dto.queryDto.ResponseSectorQuery;
 import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
@@ -79,6 +80,7 @@ class BatchStockImpServiceTest {
         BDDMockito.when(batchStockRepo.getListBatchSector(ArgumentMatchers.anyLong()))
                 .thenReturn(TestUtilsGenerator.getListDataBaseQuery());
 
+
         DataBaseQueryImp newBatch = TestUtilsGenerator.getDataBaseQueryImp();
         List<ResponseSectorQuery> newList = TestUtilsGenerator.getListResponseSectorQuery (newBatch.getId_product());
         List<ResponseSectorQuery> foundList = batchStockImpService.listBatchSector(newBatch.getId_product());
@@ -100,8 +102,16 @@ class BatchStockImpServiceTest {
     }
 
     @Test
-    void listBatchSectorOrdered() {
+    void listBatchSectorOrderedById() {
+        BDDMockito.when(batchStockRepo.getListBatchSector(ArgumentMatchers.anyLong()))
+                .thenReturn(TestUtilsGenerator.dataBaseQueries());
 
+       List<ResponseSectorQuery> foundList = batchStockImpService.listBatchSectorOrdered(1,"L");
+
+        System.out.println("foundList: " + foundList);
+        Assertions.assertThat(foundList).isNotNull();
+//        assertThat(foundList).isNotEmpty();
+      //  assertThat(foundList.)
 
     }
 
