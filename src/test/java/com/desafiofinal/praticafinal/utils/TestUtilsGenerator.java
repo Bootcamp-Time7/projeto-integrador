@@ -3,7 +3,6 @@ package com.desafiofinal.praticafinal.utils;
 import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.model.*;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +32,16 @@ public class TestUtilsGenerator {
                 .build();
     }
 
+    public static List<InBoundOrder> getOrderList(){
+        List<InBoundOrder> inBoundOrderList = new ArrayList<>();
+        InBoundOrder inBoundOrder = getOrderWithId();
+        inBoundOrderList.add(inBoundOrder);
+        return inBoundOrderList;
+    }
+
 
     public static BatchStock getBatchStockAndSectorWithCapacity(){
-        Product product = getProductWhitId();
+        Product product = getProduct();
         Sector sector = getSector();
         InBoundOrder inBoundOrder = new InBoundOrder();
         inBoundOrder.setOrderId(1L);
@@ -54,7 +60,7 @@ public class TestUtilsGenerator {
                 .build();
     }
     public static BatchStock getBatchStockWithoutCapacity(){
-        Product product = getProductWhitId();
+        Product product = getProduct();
         Sector sector = getSectorWithoutCapacity();
         InBoundOrder inBoundOrder = new InBoundOrder();
         inBoundOrder.setOrderId(1L);
@@ -74,7 +80,7 @@ public class TestUtilsGenerator {
     }
 
     public static BatchStock getBatchStockWithoutOrder(){
-        Product product = getProductWhitId();
+        Product product = getProduct();
         InBoundOrder inBoundOrder = new InBoundOrder();
         inBoundOrder.setOrderId(3L);
 
@@ -105,7 +111,7 @@ public class TestUtilsGenerator {
         return batchStockList;
     }
 
-    public static Product getProductWhitId(){
+    public static Product getProduct(){
         Seller seller = getSeller();
         return Product.builder()
                 .id(1L)
@@ -117,10 +123,33 @@ public class TestUtilsGenerator {
                 .build();
     }
 
+    public static Product getNewProduct(){
+        Seller seller = getSeller();
+        return Product.builder()
+                .validateDate(LocalDate.parse("2023-01-01"))
+                .price(1.0)
+                .productType("cold")
+                .productName("ham")
+                .seller(seller)
+                .build();
+    }
+
+    public static List<Product> getProductList(){
+        List<Product> productList = new ArrayList<>();
+        Product product = getProduct();
+        productList.add(product);
+        return productList;
+    }
 
     public static Seller getSeller(){
         return Seller.builder()
                 .id(1L)
+                .sellerName("Maria")
+                .build();
+    }
+
+    public static Seller getNewSeller(){
+        return Seller.builder()
                 .sellerName("Maria")
                 .build();
     }
@@ -227,7 +256,12 @@ public class TestUtilsGenerator {
                 .build();
     }
 
-
+    public static List<Cart> getCartFinishedList(){
+        List<Cart> cartList = new ArrayList<>();
+        Cart cart = getCartFinished();
+        cartList.add(cart);
+        return cartList;
+    }
 
     public static Cart getCartOpen(){
         Buyer buyer = getBuyer();
@@ -241,6 +275,17 @@ public class TestUtilsGenerator {
                 .build();
     }
 
+    public static Cart getCartOpenValueExceedLimits(){
+        Buyer buyer = getBuyer();
+        return Cart.builder()
+                .cartId(1L)
+                .buyer(buyer)
+                .listPurchase(getPurchaseList())
+                .totalPrice(100000)
+                .date(LocalDate.parse("2023-02-02"))
+                .orderStatus("Open")
+                .build();
+    }
 
     public static Buyer getBuyer(){
         return Buyer.builder()
@@ -248,6 +293,7 @@ public class TestUtilsGenerator {
                 .buyerName("Marina")
                 .build();
     }
+
 
     public static DataBaseQueryImp getDataBaseQueryImp (){
         DataBaseQueryImp dataBaseQueryImp = new DataBaseQueryImp();
@@ -302,6 +348,8 @@ public class TestUtilsGenerator {
                 .build();
     }
 
+
+
     public static List<StockQuery> getListStockQuery (){
         StockQuery stock = getStockQuery();
         StockQuery stock1= getStockQuery();
@@ -344,16 +392,16 @@ public class TestUtilsGenerator {
     }
 
     public static DataBaseStockQueryImp getDataBaseStockQuery(Long id) {
-       DataBaseStockQueryImp dataBaseStockQueryImp = new DataBaseStockQueryImp();
-         dataBaseStockQueryImp.builder()
+        DataBaseStockQueryImp dataBaseStockQueryImp = new DataBaseStockQueryImp();
+        dataBaseStockQueryImp.builder()
                 .productType("FF")
-                 .sectorId(id)
+                .sectorId(id)
                 .batchId(1L)
                 .currentQuantity(300L)
                 .dueDate(LocalDate.parse("2022-08-26"))
                 .productId(1L)
                 .build();
-         return dataBaseStockQueryImp;
+        return dataBaseStockQueryImp;
     }
 
     public static List<DataBaseStockQuery> getDataBaseStockQueryList(){
@@ -404,21 +452,66 @@ public class TestUtilsGenerator {
                 .dataBaseStocks(getListResponseStockQuery())
                 .build();
     }
-//    public static List<DataBaseStockQuery> getListDataStockQueryImp (){
-//        DataBaseStockQuery = new DataBaseQueryImp()
-//        DataBaseStockQueryImp stockQuery = getDataBaseStockQuery();
-//        DataBaseStockQueryImp stockQuery1 =getDataBaseStockQuery();
-//        stockQuery1.setSectorId(1L);
-//
-//        DataBaseStockQueryImp stockQuery2 = getDataBaseStockQuery();
-//        stockQuery2.setSectorId(2L);
-//
-//
-//        List<DataBaseStockQueryImp> stockQueryList = new ArrayList<>();
-//        stockQueryList.add(stockQuery);
-//        stockQueryList.add(stockQuery1);
-//        stockQueryList.add(stockQuery2);
-//        return stockQueryList;
-//    }
 
+    public static StockQuery getStockQuery2(){
+        DataBaseQueryImp dataQuery = new DataBaseQueryImp();
+        return StockQuery.builder()
+                .sectorId(1L)
+                .dueDate(LocalDate.parse("2023-02-02"))
+                .currentQuantity(200)
+                .productId(1L)
+                .batchId(dataQuery.getBatch_id())
+                .build();
+    }
+
+    public static DataBaseQueryImp dataBaseQueryImpWithId (Long id){
+        return  DataBaseQueryImp.builder()
+                .category("FF")
+                .batch_id(43L)
+                .due_date(LocalDate.parse("2022-08-26"))
+                .current_quantity(300L)
+                .id_product(id)
+                .sector_id(1L)
+                .build();
+
+    }
+
+    public static List<DataBaseQuery> dataBaseQueries (){
+        DataBaseQuery data0 = dataBaseQueryImpWithId(1L);
+        DataBaseQuery data1 = dataBaseQueryImpWithId(2L);
+        DataBaseQuery data2 = dataBaseQueryImpWithId(3L);
+
+
+        List<DataBaseQuery> list = new ArrayList<>();
+
+        list.add(data0);
+        list.add(data1);
+        list.add(data2);
+
+        return list;
+    }
+
+    public static DataBaseTotalQuantityQueryImp dataBaseQuantity(Long id){
+        return DataBaseTotalQuantityQueryImp.builder()
+                .total_quantity(300L)
+                .category("FF")
+                .id_product(id)
+                .sector_id(1L)
+                .build();
+    }
+
+
+    public static  List<DataBaseTotalQuantityQuery> listTotalQuantity(){
+        DataBaseTotalQuantityQuery data0 = dataBaseQuantity(1L);
+        DataBaseTotalQuantityQuery data1 = dataBaseQuantity(1L);
+        DataBaseTotalQuantityQuery data2 = dataBaseQuantity(2L);
+
+        List<DataBaseTotalQuantityQuery>list = new ArrayList<>();
+        list.add(data0);
+        list.add(data1);
+        list.add(data2);
+
+        return list;
+    }
 }
+
