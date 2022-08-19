@@ -479,14 +479,37 @@ public class TestUtilsGenerator {
     public static List<DataBaseQuery> dataBaseQueries (){
         DataBaseQuery data0 = dataBaseQueryImpWithId(1L);
         DataBaseQuery data1 = dataBaseQueryImpWithId(2L);
-        //DataBaseQuery data2 = dataBaseQueryImpWithId(3L);
+        DataBaseQuery data2 = dataBaseQueryImpWithId(3L);
 
 
         List<DataBaseQuery> list = new ArrayList<>();
 
         list.add(data0);
         list.add(data1);
-      //  list.add(data2);
+        list.add(data2);
+
+        return list;
+    }
+
+    public static DataBaseTotalQuantityQueryImp dataBaseQuantity(Long id){
+        return DataBaseTotalQuantityQueryImp.builder()
+                .total_quantity(300L)
+                .category("FF")
+                .id_product(id)
+                .sector_id(1L)
+                .build();
+    }
+
+
+    public static  List<DataBaseTotalQuantityQuery> listTotalQuantity(){
+        DataBaseTotalQuantityQuery data0 = dataBaseQuantity(1L);
+        DataBaseTotalQuantityQuery data1 = dataBaseQuantity(1L);
+        DataBaseTotalQuantityQuery data2 = dataBaseQuantity(2L);
+
+        List<DataBaseTotalQuantityQuery>list = new ArrayList<>();
+        list.add(data0);
+        list.add(data1);
+        list.add(data2);
 
         return list;
     }

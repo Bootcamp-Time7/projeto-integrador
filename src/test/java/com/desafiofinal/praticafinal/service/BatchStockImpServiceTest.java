@@ -1,8 +1,6 @@
 package com.desafiofinal.praticafinal.service;
 
-import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQuery;
-import com.desafiofinal.praticafinal.dto.queryDto.DataBaseQueryImp;
-import com.desafiofinal.praticafinal.dto.queryDto.ResponseSectorQuery;
+import com.desafiofinal.praticafinal.dto.queryDto.*;
 import com.desafiofinal.praticafinal.exception.ElementAlreadyExistsException;
 import com.desafiofinal.praticafinal.exception.ElementNotFoundException;
 
@@ -103,24 +101,45 @@ class BatchStockImpServiceTest {
 
     @Test
     void listBatchSectorOrderedById() {
-        BDDMockito.when(batchStockRepo.getListBatchSector(ArgumentMatchers.anyLong()))
+        BDDMockito.when(batchStockRepo.getListOrderedById(ArgumentMatchers.anyLong()))
                 .thenReturn(TestUtilsGenerator.dataBaseQueries());
 
        List<ResponseSectorQuery> foundList = batchStockImpService.listBatchSectorOrdered(1,"L");
 
         System.out.println("foundList: " + foundList);
         Assertions.assertThat(foundList).isNotNull();
-//        assertThat(foundList).isNotEmpty();
-      //  assertThat(foundList.)
+        assertThat(foundList).isNotEmpty();
+        assertThat(foundList.size()).isEqualTo(1);
+        assertThat(foundList.get(0).getProductId()).isEqualTo(1L);
 
     }
 
     @Test
-    void getTotalQuantity() {
+    void getTotalQuantity_whenThereAreProductsInBatchStock() {
+        BDDMockito.when(batchStockRepo.getListQuantity(ArgumentMatchers.anyLong()))
+                .thenReturn(TestUtilsGenerator.listTotalQuantity());
+
+        ResponseSectorTotalQuantity foundResponse = batchStockImpService.getTotalQuantity(1);
+
+        Assertions.assertThat(foundResponse).isNotNull();
+        assertThat(foundResponse.getProductId()).isPositive();
+        assertThat(foundResponse.getProductId()).isEqualTo(1L);
+    }
+
+    @Test
+    void getTotalQuantity_whenThereAreNoProductsInBatchStock() {
+        DataBaseTotalQuantityQuery newData = TestUtilsGenerator.dataBaseQuantity(1L);
+
+        assertThatThrownBy(() -> {
+            batchStockImpService.getTotalQuantity(newData.getId_product());
+        }).isInstanceOf(ElementNotFoundException.class)
+                .hasMessageContaining("Não há esse produto em nenhum depósito");
     }
 
     @Test
     void getListDueDate() {
+
+
     }
 
     @Test
